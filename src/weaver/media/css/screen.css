@@ -1,0 +1,55 @@
+body { margin: 0; font-family: Palatino Linotype, Book Antiqua, Palatino, serif; font-size: 12px; text-align: center; }
+body #container { width: 960px; margin: 0 auto; text-align: left; }
+
+/* Layout */
+#eyebrow { text-align: right; margin: 10px 0; }
+
+#head .logos { overflow: hidden; display: block-inline; }
+#head .logos h1 { font-size: 34px; float: left; line-height: 60px; margin: 0; }
+#head .logos h1 a { text-decoration: none; color: #333; }
+#head .logos h1 a:hover { color: #000; }
+#head .logos h2 { font-size: 16px; float: left; line-height: 60px; margin: 5px 0 0 25px; color: #666; }
+
+#nav-main ul { margin: 0; padding: 0; display: block-inline; overflow: hidden; }
+#nav-main ul li { list-style-type: none; margin: 0 1px 0 0; padding: 7px; background: #666; float: left; }
+#nav-main ul li.active { background: #000; }
+#nav-main ul li a { color: #fff; font-size: 14px; font-weight: bold; text-decoration: none; }
+
+#main { margin-top: 40px; }
+
+label { font-weight: bold; color: #333; float: left; }
+fieldset { border: 0; margin: 0; padding: 0; }
+
+.form-row { padding: 5px 0; display: block; overflow: hidden; }
+.form-row label { display: inline-block; width: 110px; }
+
+.submit-row { padding-left: 110px; }
+
+
+
+
+
+/* Symphony markup */
+/*   Buttons */
+.primary.b { border: 2px inset #ccc; padding: 4px 6px; background: #efefef; margin: 0 10px 0 0; }
+.primary.b input, .primary.btn a { line-height: 22px; font-size: 13px; padding: 0; margin:0; border: 0; background: 0; text-decoration: none; color: #000; font-family: Palatino Linotype, Book Antiqua, Palatino, serif; }
+
+.secondary.b { border: 2px inset #efefef; padding: 1px 3px; background: #efefef; margin: 0 10px 0 0; }
+.secondary.b input, .secondary.b a { line-height: 16px; font-size: 11px; padding: 0; margin:0; border: 0; background: 0; text-decoration: none; color: #000; font-family: Palatino Linotype, Book Antiqua, Palatino, serif; }
+
+.disabled.primary.b { background: red; }
+.selected.primary.b { }
+.hover.primary.b { }
+
+
+/*   Icons */
+.i-s { background: url(icons_10x10.png); width: 10px; height: 10px; } /* small 10x10 */
+.i-m { background: url(icons_16x16.png); width: 16px; height: 16px; } /* medium 16x16 */
+.i-l { background: url(icons_32x32.png); width: 32px; height: 32px; } /* large 32x32 */
+
+/* <span class="i-allocate i-s"><a>Allocate</a></span> */
+.i-allocate .i-s { background-position: 10px 20px; }
+.selected.i-allocate { background-position: 20px 20px; }
+.hover.i-allocate { background-position: 30px 20px; }
+.disabled.i-allocate { background-position: 40px 20px; }
+

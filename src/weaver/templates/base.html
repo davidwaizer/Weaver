@@ -1,0 +1,76 @@
+{% load jstools %}<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% if page.title %}{{ page.title }} | {% endif %}{% endblock %}Weaver</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+    <link rel="stylesheet" href="{{ MEDIA_URL }}css/screen.css">
+    <!--[if IE ]>
+        <link rel="stylesheet" href="{{ MEDIA_URL }}css/ie.css">
+    <![endif]-->
+    <link rel="icon" href="{{ MEDIA_URL }}img/favicon.png" type="image/png">
+    {% scripts "js/scripts-min.js" %}
+        js/jquery.js
+        js/modernizr.js
+        js/scripts.js
+    {% endscripts %}
+    <!--[if IE ]>
+        <script src="{{ MEDIA_URL }}js/html5.js"></script>
+    <![endif]-->
+</head>
+<body class="{% block bodyclass %}{% endblock %}">
+<div id="container">
+    <header id="head">
+        <div id="wrap">
+			<!-- 
+            <div id="eyebrow">
+                <nav>
+					{% if request.user.is_authenticated %}
+					<a href="{% url core:logout %}">Login</a>
+					{% else %}
+					<a href="{% url core:login %}">Login</a>
+					{% endif %}
+                </nav>
+            </div>
+            <div class="logos">
+                <h1 ><a class="ir" href="{% url core:index %}">Weaver</a></h1>
+                <h2 class="ir">Collaborative development sprints!</h2>
+            </div>
+            <nav id="nav-main">
+                <ul>
+
+					<li><a href="/about/">About</a></li>
+				</ul>
+            </nav>-->
+        </div>
+    </header>
+    <div id="main">
+		{% block primary %} {% endblock %}
+        <div id="sidebar">
+			<ul>
+				<li><a href="/provisioning/">Manage Servers</a></li>
+			</ul>
+        </div>
+    </div>
+    <footer id="foot">
+		<div class="wrap">
+        	<h4>Other Information</h4>
+	        <div id="top">
+	            
+	        </div>
+	        <div id="copyright">
+	            &copy; 2011
+	        </div>
+		</div>
+    </footer>
+</div>
+{% block script %}{% endblock %}
+
+</body>
+</html>

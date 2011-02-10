@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+	<div>
+		<h1>{{ title }}</h1>
+	</div>
+	<form method="post" action="{{ app_path }}" enctype="multipart/form-data" id="form" class="form">	
+		{% csrf_token %}
+		
+		<div class="submit-row aligned wide ()">
+			<input class="default" type="submit" value="{% trans "Submit" %}" /> <span class="back"><a href="javascript:history.back();">{% trans "cancel" %}</a></span>
+		</div>
+	</form>
+{% endblock %}
