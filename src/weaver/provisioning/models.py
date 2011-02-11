@@ -18,7 +18,7 @@ class ServerType(models.Model):
     
     @permalink
     def get_absolute_url(self):
-        return ('servertype-detail', None, {'slug': self.slug})
+        return ('server-type-detail', None, {'slug': self.slug})
     
     def __unicode__(self):
         return self.name
@@ -41,7 +41,7 @@ class ServerConfiguration(models.Model):
     
     @permalink
     def get_absolute_url(self):
-        return ('servertype-detail', None, {'slug': self.slug})
+        return ('server-type-detail', None, {'slug': self.slug})
     
     def __unicode__(self):
         return self.name
@@ -67,7 +67,7 @@ class ServerCommand(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        return ('idea-detail', None, {'slug': self.slug})
+        return ('server-command-detail', None, {'slug': self.slug})
 
     def __unicode__(self):
         return self.title
@@ -86,4 +86,20 @@ class ServerNode(models.Model):
     private_dns = models.CharField(_('private dns'), max_length=256, blank=True)
     locked = models.BooleanField(_('locked'), default=False)
     
+    def save(self, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.name, instance=self)
+        super(ServerCommand, self).save(**kwargs)
+    
+    @permalink
+    def get_absolute_url(self):
+        return ('server-command-detail', None, {'slug': self.slug})
+
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = _('command')
+        verbose_name_plural = _('commands')
+
     
