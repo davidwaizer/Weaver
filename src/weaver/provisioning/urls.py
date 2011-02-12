@@ -9,4 +9,9 @@ from provisioning import views
 
 urlpatterns = patterns('',
 	url(r'^$', views.index, name='index'),
+	
+	url(r'^configurations/$', views.serverconfiguration_index, name='serverconfiguration-index'),
+	url(r'^configurations/add/$', views.serverconfiguration_add, name='serverconfiguration-add'),
+	url(r'^configurations/(?P<config_id>\d+)/edit/$', views.serverconfiguration_add, name='serverconfiguration-edit'),
+	
 )

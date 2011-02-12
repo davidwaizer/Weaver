@@ -7,6 +7,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Example:
     url(r'^', include('core.urls', namespace='core', app_name='core')),
-    url(r'^provisioning/', include('provisioning.urls', namespace='ideas', app_name='ideas')),
+    url(r'^provisioning/', include('provisioning.urls', namespace='provisioning', app_name='provisioning')),
 )
 
