@@ -28,7 +28,6 @@
 <div id="container">
     <header id="head">
         <div id="wrap">
-			<!-- 
             <div id="eyebrow">
                 <nav>
 					{% if request.user.is_authenticated %}
@@ -40,23 +39,25 @@
             </div>
             <div class="logos">
                 <h1 ><a class="ir" href="{% url core:index %}">Weaver</a></h1>
-                <h2 class="ir">Collaborative development sprints!</h2>
+                <h2 class="ir">Server Administration</h2>
             </div>
             <nav id="nav-main">
                 <ul>
-
-					<li><a href="/about/">About</a></li>
+					<li class="active"><a href="/about/">Manage Servers</a></li>
+					<li><a href="/about/">Monitoring</a></li>
 				</ul>
-            </nav>-->
+            </nav>
         </div>
     </header>
     <div id="main">
-		{% block primary %} {% endblock %}
-        <div id="sidebar">
+		<div id="sidebar">
 			<ul>
 				<li><a href="/provisioning/">Manage Servers</a></li>
 			</ul>
         </div>
+		<div id="content">
+		{% block primary %} {% endblock %}
+		</div>
     </div>
     <footer id="foot">
 		<div class="wrap">
