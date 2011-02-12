@@ -1,33 +1,43 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block primary %}
-	<h2>Server configurations</h2>
 
-{% if configurations %}
-	<table>
-		<thead>
-			<th>Name</th>
-			<th></th>
-			<th></th>
-		</thead>
-		<tbody>
- {% for config in configurations %}
-		<tr>
-			<td></td>
-			<td></td>
-		</tr>
- {% endfor %}
-		</tbody>
-	</table>
-{% else %}
-	<div class="notice info ()">
-		<h3>No server configurations have been added yet.</h3>
-	</div>
-{% endif %}
-
-	<div class="actions">
-		<span class="primary btn ()"><a href="{% url provisioning:serverconfiguration-add %}">{% trans "New Server Configuration" %}</a></span>
-	</div>
-	
+{% block breadcrumb %}
+	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
+	<strong>Configurations</strong>
 {% endblock %}
+
+{% block primary %}
+	<div class="serverconfigurations">
+		<h2>Server configurations</h2>
+
+		{% if configurations %}
+		<table>
+			<thead>
+				<th>Name</th>
+				<th></th>
+				<th></th>
+			</thead>
+			<tbody>
+	 			{% for config in configurations %}
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>
+	 		{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<div class="notice info ()">
+			<div class="wrap">
+				<h3>No server configurations have been added yet.</h3>
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="actions">
+			<span class="primary btn ()"><a href="{% url provisioning:serverconfiguration-add %}">{% trans "New Server Configuration" %}</a></span>
+		</div>
+	</div>
+{% endblock %}
+	

@@ -38,24 +38,31 @@
                 </nav>
             </div>
             <div class="logos">
-                <h1 ><a class="ir" href="{% url core:index %}">Weaver</a></h1>
+                <h1 ><a class="ir" href="{% url provisioning:index %}">Weaver</a></h1>
                 <h2 class="ir">Server Administration</h2>
             </div>
             <nav id="nav-main">
                 <ul>
-					<li class="active"><a href="/about/">Manage Servers</a></li>
-					<li><a href="/about/">Monitoring</a></li>
+					<li class="active"><a href="{% url provisioning:index %}">Manage Servers</a></li>
+					<li><a href="/monitoring/">Monitoring</a></li>
 				</ul>
             </nav>
         </div>
     </header>
     <div id="main">
 		<div id="sidebar">
+			<!-- 
 			<ul>
 				<li><a href="/provisioning/">Manage Servers</a></li>
 			</ul>
+			-->
+			&nbsp;
         </div>
 		<div id="content">
+			<nav id="breadcrumb">
+				{% block breadcrumb %} {% endblock %}
+			</nav>
+			
 		{% block primary %} {% endblock %}
 		</div>
     </div>

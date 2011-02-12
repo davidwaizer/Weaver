@@ -27,4 +27,8 @@ def serverconfiguration_add(request):
 
 
 def serverconfiguration_edit(request, config_id):
-        return render_to_response('provisioning/serverconfiguration_edit.html', {}, context_instance=RequestContext(request))
+    return render_to_response('provisioning/serverconfiguration_edit.html', {}, context_instance=RequestContext(request))
+
+def serverconfiguration_view(request, config_name):
+    config = { 'name': 'Apache2',  }
+    return render_to_response('provisioning/serverconfiguration_view.html', { 'config': config }, context_instance=RequestContext(request))

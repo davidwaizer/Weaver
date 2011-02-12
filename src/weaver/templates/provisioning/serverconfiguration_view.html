@@ -1,7 +1,13 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block breadcrumb %}
 	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
 	<a href="{% url provisioning:serverconfiguration-index %}">{% trans "Configurations" %}</a> &raquo;
-	<strong>Add Configuration</strong>
+	<strong>{{ config.name }}</strong>
 {% endblock %}
+
+{% block primary %}
+	<h2>{{ config.name }}</h2>
+	
+{% endblock %}
+

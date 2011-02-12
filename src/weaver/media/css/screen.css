@@ -1,10 +1,12 @@
+/* Basic elements */
 body { margin: 0; font-family: helvetica, arial, freesans, clean, sans-serif; font-size: 12px; text-align: center; }
 body #container { width: 960px; margin: 0 auto; text-align: left; }
 
-a { color: #0066cc; }
-a:visited { color: #003366; }
+a { color: #3e6eab; }
+a:hover { color: #0066cc; }
 
-/* Layout */
+
+/* Layout styles */
 #eyebrow { text-align: right; margin: 10px 0; }
 
 #head .logos { overflow: hidden; display: block-inline; }
@@ -22,27 +24,64 @@ a:visited { color: #003366; }
 #nav-main ul li a { line-height: 30px; text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.7); color: #fff; text-decoration: none; }
 #nav-main ul li.hover a { line-height: 28px; }
 
-#main { margin-top: 40px; }
+#main { margin-top: 10px; }
 #sidebar { float: left; width: 192px; }
 #content { float: left; width: 768px; }
 
+#breadcrumb { padding: 10px 0; }
+#breadcrumb a { font-weight: bold; text-decoration: none; }
+
+/* General form styles */
 label { font-weight: bold; color: #333; float: left; }
 fieldset { border: 0; margin: 0; padding: 0; }
 .form-row { padding: 5px 0; display: block; overflow: hidden; }
 .form-row label { display: inline-block; width: 110px; }
 .submit-row { padding-left: 110px; }
 
+.notice { background: #efefef; border: 1px solid #ccc; border-radius: 3px; -moz-border-radius: 3px; margin: 10px 0; }
+.notice .wrap { padding: 5px 10px; border: 1px solid #fff; border-radius: 2px; -moz-border-radius: 2px; }
+.notice h3 { color: #666; margin: 5px 0; font-weight: normal; font-size: 12px; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
+
+.primary.btn { display: inline-block; border: 1px solid #c5c5c5;  border-radius: 3px; -moz-border-radius: 3px; }
+.primary.btn a { font-size: 11px; text-decoration: none; color: #3a424e; font-weight: bold; display: inline-block; padding: 0 5px; background: url(../img/btn_bg.png); height: 25px; line-height: 25px;  }
+.primary.btn.hover {  border: 1px solid #4a5764; }
+.primary.btn.hover a { background: #3a424e url(../img/nav_bg.png) repeat-x top left; color: #fff; text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7); }
+
+
+/* Server overview styles */
 .servers { width: 384px; }
-.servers .layer { text-align: center; border: 1px solid #89a8c1; margin: 10px 0; border-radius: 3px; -moz-border-radius: 3px; }
-.servers .layer .wrap { border: 1px solid #fff; background: #dae4ed; padding: 10px; border-radius: 2px; -moz-border-radius: 2px; }
+.servers .layer, .server-legend .layer { text-align: center; border: 1px solid #89a8c1; margin: 10px 0; border-radius: 3px; -moz-border-radius: 3px; }
+.servers .layer .wrap, .server-legend .layer .wrap { border: 1px solid #fff; background: #dae4ed; padding: 10px; border-radius: 2px; -moz-border-radius: 2px; }
+
+.servers .layer.dmz, .server-legend .layer.dmz { text-align: center; border: 1px solid #ccc; margin: 10px 0; border-radius: 3px; -moz-border-radius: 3px; }
+.servers .layer.dmz .wrap, .server-legend .layer.dmz .wrap { border: 1px solid #fff; background: #efefef; padding: 10px; border-radius: 2px; -moz-border-radius: 2px; }
+
+.server-legend .layer, .server-legend .layer.dmz { display: block-inline; width: 16px; height: 16px; }
+.server-legend .layer .wrap, .server-legend .layer.dmz .wrap { padding: 0; width: 14px; height: 14px; }
+
+.server-legend dt { margin: 0; padding: 0; display: inline-block;}
+.server-legend dd { margin: 0; padding: 0; display: inline-block; font-size: 11px; margin-right: 10px; line-height: 16px;}
 
 .servers .layer .legend { text-align: left; clear: both; display: block; }
 .servers .layer .legend h3 { color: #3a424e; font-size: 11px; margin: 0; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
-.servers .layer .server { display: inline-block; padding-top: 32px; background-repeat: no-repeat; background-position: top center; }
+.servers .layer .server { cursor: pointer; display: inline-block; padding-top: 32px; width: 110px; background-repeat: no-repeat; background-position: top center; margin: 0 10px; }
+
+.servers .layer .server .actions { display: none; }
+.servers .layer .server .actions .btn { padding: 2px 4px; }
+.servers .layer .server .actions .btn.hover {  padding: 1px 3px; background: #454545; border: 1px solid #777; border-radius: 3px; -moz-border-radius: 3px; }
+.servers .layer .server .actions .btn.hover a { text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7); color: #fff; }
+
+.servers .layer .server.hover { position: relative; }
+.servers .layer .server.hover .actions { display: block; position: absolute; top: 0; right: -100px; background: #e6e7e4; border: 1px solid #a4a7a2; border-radius: 3px; -moz-border-radius: 3px; }
+.servers .layer .server.hover .actions ul {  margin: 0; padding: 5px; list-style-type: none; border: 1px solid #fff; border-radius: 2px; -moz-border-radius: 2px; text-align: left; }
+.servers .layer .server.hover .actions ul li { padding: 2px 0; }
+.servers .layer .server.hover .actions ul li a { color: #333; text-decoration: none; font-size: 11px; font-weight: bold; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
 
 .servers .layer h4 { text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
 .servers .layer h4 span { display: block; font-weight: normal; font-size: 11px; padding-top: 3px; }
-
 .servers .layer .web { background-image: url(../img/server_web.png); }
 .servers .layer .database { background-image: url(../img/server_database.png); }
 
+/* Server configuration styles */
+.serverconfigurations { width: 384px; }
+.serverconfigurations .actions { text-align: right; }

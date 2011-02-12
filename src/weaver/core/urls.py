@@ -8,8 +8,7 @@ from django.utils.http import urlquote
 from core import views
 
 urlpatterns = patterns('',
-	url(r'^$', views.index, name='index'),
-    
+	
     # Registration
 	url(r'^login/$', views.login, name='login'),
 	url(r'^logout$', views.logout, name='logut'),
