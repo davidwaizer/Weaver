@@ -1,0 +1,22 @@
+This is a non-comprehensive list of features and ideas.
+
+Look & Feel:
+=============================
+
+Manage Servers Overview:
+	o Layers should be able to be on the same tier
+	o Clicking on the layer name should allow you to rename
+	o The server hover pane should include more information about the server instance
+		- When it was started
+		- AMI/Instance ID
+		- Public/Private DNS
+
+
+
+
+Functionality
+=============================
+Everything is missing at this point. Focusing on the UI first.
+
+o Allow user to specify new actions for a particular server configuration
+	- i.e. "Backup", "Rebuild indexes", "Add Slave Database"
