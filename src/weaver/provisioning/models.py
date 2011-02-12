@@ -27,12 +27,22 @@ class ServerType(models.Model):
         verbose_name = _('server type')
         verbose_name_plural = _('server types')
     
-
+SERVERCONFIGURATION_ICONS = (
+            ('generic', _(u'Server')),
+            ('proxy', _(u'Proxy / Loadbalancer')),
+            ('web', _(u'Web Server')),
+            ('database', _(u'Database Server')),
+            ('queue', _(u'Queue Server')),
+            ('email', _(u'Email Server')),
+            ('cache', _(u'Cache Server')),
+        )
 
 class ServerConfiguration(models.Model):
     slug = models.CharField(_('slug'), max_length=110, editable=False, unique=True)
     name = models.CharField(_('name'), max_length=100)
-    type = models.ForeignKey(ServerType)
+    base_image = models.CharField(_('AMI image'), max_length=100,)
+    icon_style = models.CharField(_(u'display icon'), max_length=32, choices=SERVERCONFIGURATION_ICONS, default='generic')
+    type = models.ForeignKey(ServerType, verbose_name=_(u'type'), related_name='server_configurations', blank=True, null=True, editable=False)
     
     def save(self, **kwargs):
         if not self.id:

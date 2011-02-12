@@ -2,9 +2,11 @@
 body { margin: 0; font-family: helvetica, arial, freesans, clean, sans-serif; font-size: 12px; text-align: center; }
 body #container { width: 960px; margin: 0 auto; text-align: left; }
 
-a { color: #3e6eab; }
+a { color: #3e6eab; outline: 0; }
+
 a:hover { color: #0066cc; }
 
+input { outline-color: #daebfd;  }
 
 /* Layout styles */
 #eyebrow { text-align: right; margin: 10px 0; }
@@ -32,20 +34,34 @@ a:hover { color: #0066cc; }
 #breadcrumb a { font-weight: bold; text-decoration: none; }
 
 /* General form styles */
-label { font-weight: bold; color: #333; float: left; }
+label { font-weight: bold; color: #333; font-size: 13px; line-height: 20px; }
+label .required { color: #b04e30; }
 fieldset { border: 0; margin: 0; padding: 0; }
 .form-row { padding: 5px 0; display: block; overflow: hidden; }
-.form-row label { display: inline-block; width: 110px; }
-.submit-row { padding-left: 110px; }
+
+.form-row label { display: block; }
+.aligned .form-row label { display: inline-block; width: 110px; float: left; }
+.form input[type="text"], .form input[type="password"] { margin-right: 5px; font-size: 13px; padding: 3px; color: #666; background-repeat: no-repeat; background-position: right center; }
+.form .actions { text-align: right; margin: 5px 0; }
+.form .help { font-size: 11px; color: #666; }
+
+.primary.btn { display: inline-block; border: 1px solid #c5c5c5;  border-radius: 3px; -moz-border-radius: 3px; }
+.primary.btn a { font-size: 11px; text-decoration: none; color: #3a424e; font-weight: bold; display: inline-block; padding: 0 5px; background: url(../img/btn_bg.png); height: 25px; line-height: 25px;  }
+.primary.btn input { margin: 0; border: 0; font-size: 11px; color: #3a424e; font-weight: bold; display: inline-block; padding: 0 5px; background: url(../img/btn_bg.png); height: 25px; line-height: 24px;  }
+.primary.btn.hover {  border: 1px solid #4a5764; }
+.primary.btn.hover a { background: #3a424e url(../img/nav_bg.png) repeat-x top left; color: #fff; text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7); }
+.primary.btn.hover input { background: #3a424e url(../img/nav_bg.png) repeat-x top left; color: #fff; text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7); }
+.form .primary.btn a { font-size: 12px; padding: 0 10px; height: 30px; line-height: 30px; }
+.form .primary.btn input { font-size: 12px; padding: 0 10px; height: 30px; line-height: 29px; }
+
+.form .error {  }
+.form .errorlist { list-style-type: none; margin: 5px 0; padding: 0; }
+.form .errorlist li { margin: 2px 0; color: #b04e30; }
 
 .notice { background: #efefef; border: 1px solid #ccc; border-radius: 3px; -moz-border-radius: 3px; margin: 10px 0; }
 .notice .wrap { padding: 5px 10px; border: 1px solid #fff; border-radius: 2px; -moz-border-radius: 2px; }
 .notice h3 { color: #666; margin: 5px 0; font-weight: normal; font-size: 12px; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
 
-.primary.btn { display: inline-block; border: 1px solid #c5c5c5;  border-radius: 3px; -moz-border-radius: 3px; }
-.primary.btn a { font-size: 11px; text-decoration: none; color: #3a424e; font-weight: bold; display: inline-block; padding: 0 5px; background: url(../img/btn_bg.png); height: 25px; line-height: 25px;  }
-.primary.btn.hover {  border: 1px solid #4a5764; }
-.primary.btn.hover a { background: #3a424e url(../img/nav_bg.png) repeat-x top left; color: #fff; text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7); }
 
 
 /* Server overview styles */
@@ -85,3 +101,4 @@ fieldset { border: 0; margin: 0; padding: 0; }
 /* Server configuration styles */
 .serverconfigurations { width: 384px; }
 .serverconfigurations .actions { text-align: right; }
+.serverconfigurations .form-row input { width: 374px; }

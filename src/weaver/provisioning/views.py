@@ -13,6 +13,7 @@ from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 
+from provisioning.forms import ServerConfigurationForm
 
 def index(request):
     return render_to_response('provisioning/index.html', {}, context_instance=RequestContext(request))
@@ -23,7 +24,16 @@ def serverconfiguration_index(request):
     
 
 def serverconfiguration_add(request):
-    return render_to_response('provisioning/serverconfiguration_add.html', {}, context_instance=RequestContext(request))
+    form = ServerConfigurationForm()
+    
+    if request.method == 'POST':
+        form = ServerConfigurationForm(request.POST)
+        
+        if form.is_valid():
+            config = form.save()
+            return HttpResponseRedirect(reverse('provisioning:serverconfiguration-edit', args=(config.id)))
+    
+    return render_to_response('provisioning/serverconfiguration_add.html', { 'form': form }, context_instance=RequestContext(request))
 
 
 def serverconfiguration_edit(request, config_id):
