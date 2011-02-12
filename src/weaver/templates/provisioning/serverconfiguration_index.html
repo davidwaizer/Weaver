@@ -11,18 +11,17 @@
 	<div class="serverconfigurations">
 		<h2>Server configurations</h2>
 
-		{% if configurations %}
+		{% if configs %}
 		<table>
 			<thead>
 				<th>Name</th>
-				<th></th>
-				<th></th>
+				<th>AMI</th>
 			</thead>
 			<tbody>
-	 			{% for config in configurations %}
+	 			{% for config in configs %}
 			<tr>
-				<td></td>
-				<td></td>
+				<td>{{config.name}}</td>
+				<td>{{config.base_image}}</td>
 			</tr>
 	 		{% endfor %}
 			</tbody>

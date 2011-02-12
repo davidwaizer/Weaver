@@ -12,6 +12,6 @@ urlpatterns = patterns('',
 	
 	url(r'^configurations/$', views.serverconfiguration_index, name='serverconfiguration-index'),
 	url(r'^configurations/add/$', views.serverconfiguration_add, name='serverconfiguration-add'),
-	url(r'^configurations/(?P<config_name>\w+)/$', views.serverconfiguration_view, name='serverconfiguration-view'),
-	url(r'^configurations/(?P<config_name>\w+)/edit/$', views.serverconfiguration_add, name='serverconfiguration-edit'),
+	url(r'^configurations/(?P<config_name>\w+\-)/$', views.serverconfiguration_view, name='serverconfiguration-view'),
+	url(r'^configurations/(?P<config_name>\w+\-)/edit/$', views.serverconfiguration_add, name='serverconfiguration-edit'),
 )

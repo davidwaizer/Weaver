@@ -47,7 +47,7 @@ class ServerConfiguration(models.Model):
     def save(self, **kwargs):
         if not self.id:
             self.slug = slugify(self.name, instance=self)
-        super(ServerType, self).save(**kwargs)
+        super(ServerConfiguration, self).save(**kwargs)
     
     @permalink
     def get_absolute_url(self):
