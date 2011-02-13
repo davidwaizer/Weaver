@@ -6,7 +6,7 @@ a { color: #3e6eab; outline: 0; }
 
 a:hover { color: #0066cc; }
 
-table { width: 100%; border-collapse: collapse; border: 1px solid #ccc;  }
+table { width: 100%; border-collapse: collapse; border: 1px solid #ccc; margin: 0 0 10px 0; }
 table th { padding: 5px; border-bottom: 1px solid #999; background: #d9d9d9 url(../img/btn_bg.png) repeat-x left bottom; color: #333; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
 table td { border-bottom: 1px solid #ccc; padding: 5px; }
 
@@ -58,11 +58,12 @@ input { outline-color: #daebfd;  }
 /* General form styles */
 label { font-weight: bold; color: #333; font-size: 13px; line-height: 20px; }
 label .required { color: #b04e30; }
-fieldset { border: 1px solid #efefef; margin: 0; padding: 0; border-radius: 3px; -moz-border-radius: 3px; padding: 10px; margin-bottom: 10px; }
-fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0 -5px; display: block; background: #fff; position: absolute; padding: 0 5px; }
-.form-row { padding: 5px 0; display: block; overflow: hidden; }
+fieldset { border: 1px solid #efefef; margin: 0 0 10px 0; padding: 10px 0 10px 0; border-radius: 3px; -moz-border-radius: 3px; }
+fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0 5px; display: block; background: #fff; position: absolute; padding: 0 5px; }
+.form-row { padding: 5px 0; display: block-inline; overflow: hidden; }
 
-.form-row label { display: block; }
+.form-row label { display: block; width: auto; }
+.form-row .field { float: left; margin-left: 10px; }
 .aligned .form-row label { display: inline-block; width: 110px; float: left; }
 .form input[type="text"], .form input[type="password"],
 .inline-form input[type="text"], .inline-form input[type="password"] { margin: 0 5px 0 0; font-size: 13px; padding: 3px; color: #666; background-repeat: no-repeat; background-position: right center; }
@@ -79,7 +80,7 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .form .primary.btn input { font-size: 12px; padding: 0 10px; height: 30px; line-height: 29px; }
 
 .form .error {  }
-.form .errorlist { list-style-type: none; margin: 5px 0; padding: 0; }
+.form .errorlist { list-style-type: none; margin: 5px 0 5px 2px; padding: 0; }
 .form .errorlist li { margin: 2px 0; color: #b04e30; }
 
 .notice { background: #efefef; border: 1px solid #a8a8a8; border-radius: 3px; -moz-border-radius: 3px; margin: 10px 0; }
@@ -89,12 +90,15 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 
 
 /* Server overview styles */
-.servers { width: 384px; }
+.servers { width: 420px; }
+.servers .pane { float: left; display: inline-block; }
+.servers .tier { text-align: center; display: inline-block; width: 100%; }
+.servers .tier .layer { display: inline-block; }
 .servers .layer, .server-legend .layer { text-align: center; border: 1px solid #89a8c1; margin: 10px 0; border-radius: 3px; -moz-border-radius: 3px; }
-.servers .layer .wrap, .server-legend .layer .wrap { border: 1px solid #fff; background: #dae4ed; padding: 10px; border-radius: 2px; -moz-border-radius: 2px; }
+.servers .layer .wrap, .server-legend .layer .wrap { border: 1px solid #fff; background: #dae4ed; padding: 15px 10px 10px 10px; border-radius: 2px; -moz-border-radius: 2px; }
 
 .servers .layer.dmz, .servers .layer.new, .server-legend .layer.dmz { text-align: center; border: 1px solid #ccc; margin: 10px 0; border-radius: 3px; -moz-border-radius: 3px; }
-.servers .layer.dmz .wrap, .servers .layer.new .wrap, .server-legend .layer.dmz .wrap { border: 1px solid #fff; background: #efefef; padding: 10px; border-radius: 2px; -moz-border-radius: 2px; }
+.servers .layer.dmz .wrap, .servers .layer.new .wrap, .server-legend .layer.dmz .wrap { border: 1px solid #fff; background: #efefef;  border-radius: 2px; -moz-border-radius: 2px; }
 .servers .layer.new { border: 1px dotted #666; }
 
 .server-legend .layer, .server-legend .layer.dmz { display: block-inline; width: 16px; height: 16px; }
@@ -103,9 +107,9 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .server-legend dt { margin: 0; padding: 0; display: inline-block;}
 .server-legend dd { margin: 0; padding: 0; display: inline-block; font-size: 11px; margin-right: 10px; line-height: 16px;}
 
-.servers .layer .legend { text-align: left; clear: both; display: block; }
+.servers .layer .legend { margin: -10px 0 0 -5px; text-align: left; clear: both; display: block; }
 .servers .layer .legend h3 { color: #3a424e; font-size: 11px; margin: 0; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
-.servers .layer .server { cursor: pointer; display: inline-block; padding-top: 32px; width: 110px; background-repeat: no-repeat; background-position: top center; margin: 0 10px; }
+.servers .layer .server { cursor: pointer; display: inline-block; padding-top: 32px; width: 110px; background-repeat: no-repeat; background-position: top center; margin: 5px 10px 0 10px; }
 
 .servers .layer .server .actions { display: none; }
 .servers .layer .server .actions .btn { padding: 2px 4px; }
@@ -113,17 +117,21 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .servers .layer .server .actions .btn.hover a { text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7); color: #fff; }
 
 .servers .layer .server.hover { position: relative; }
-.servers .layer .server.hover .actions { display: block; position: absolute; top: 0; right: -100px; background: #e6e7e4; border: 1px solid #a4a7a2; border-radius: 3px; -moz-border-radius: 3px; }
+.servers .layer .server.hover .actions { display: block; position: absolute; z-index: 9999; top: 0; right: -100px; background: #e6e7e4; border: 1px solid #a4a7a2; border-radius: 3px; -moz-border-radius: 3px; }
 .servers .layer .server.hover .actions ul {  margin: 0; padding: 5px; list-style-type: none; border: 1px solid #fff; border-radius: 2px; -moz-border-radius: 2px; text-align: left; }
 .servers .layer .server.hover .actions ul li { padding: 2px 0; }
 .servers .layer .server.hover .actions ul li a { color: #333; text-decoration: none; font-size: 11px; font-weight: bold; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
 
-.servers .layer h4 { text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
+.servers .layer h4 { margin: 10px 0 5px 0; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
 .servers .layer h4 span { display: block; font-weight: normal; font-size: 11px; padding-top: 3px; }
 .servers .layer .web { background-image: url(../img/server_web.png); }
 .servers .layer .database { background-image: url(../img/server_database.png); }
+.servers .layer .generic { background-image: url(../img/server.png); }
+.servers .layer .email { background-image: url(../img/server.png); }
+.servers .layer .queue { background-image: url(../img/server.png); }
 
 /* Server configuration styles */
 .serverconfigurations { width: 384px; }
 .serverconfigurations .actions { text-align: right; }
-.serverconfigurations .form-row input { width: 374px; }
+.serverconfigurations #id_base_image { width: 130px; }
+.serverconfigurations .form-row input { width: 345px; }

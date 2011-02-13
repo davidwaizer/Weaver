@@ -18,11 +18,11 @@
 				<th>AMI</th>
 			</thead>
 			<tbody>
-	 			{% for config in configs %}
-			<tr>
-				<td>{{config.name}}</td>
-				<td>{{config.base_image}}</td>
-			</tr>
+	 		{% for config in configs %}
+				<tr>
+					<td><a href="{% url provisioning:serverconfiguration-edit config.slug %}">{{config.name}}</a></td>
+					<td>{{config.base_image}}</td>
+				</tr>
 	 		{% endfor %}
 			</tbody>
 		</table>

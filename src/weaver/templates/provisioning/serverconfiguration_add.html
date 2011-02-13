@@ -24,10 +24,7 @@
 			<fieldset>
 				<h3>{% trans "EC2 settings" %}</h3>
 				<div class="form-row">
-		            {{ form|formfields:"base_image" }}
-		        </div>
-				<div class="form-row">
-		            {{ form|formfields:"public_key" }}
+		            {{ form|formfields:"base_image,public_key" }}
 		        </div>
 			</fieldset>
 

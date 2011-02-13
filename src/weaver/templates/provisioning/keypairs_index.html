@@ -9,8 +9,9 @@
 {% block primary %}
 	<div class="keypairs">
 		<h2>{% trans "Private keys" %}</h2>
-		<p>{% trans "These are the local private keys that can you use to connect to EC2." %}</p>
+
 		{% if local_keypairs %}
+		<p>{% trans "These are the local private keys that can you use to connect to EC2." %}</p>
 			<table>
 				<thead>
 					<th>{% trans "Name" %}</th>
@@ -34,8 +35,8 @@
 		{% endif %}
 		
 		<h2>{% trans "Public keys" %}</h2>
-		<p>{% trans "These are the public keys that are available to your EC2 instances." %}</p>
 		{% if ec2_keypairs %}
+		<p>{% trans "These are the public keys that are available to your EC2 instances." %}</p>
 			<table>
 				<thead>
 					<th>Name</th>

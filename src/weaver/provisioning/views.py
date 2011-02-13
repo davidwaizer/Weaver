@@ -41,7 +41,17 @@ def serverconfiguration_add(request):
 
 
 def serverconfiguration_edit(request, config_name):
-    return render_to_response('provisioning/serverconfiguration_edit.html', {}, context_instance=RequestContext(request))
+    config = get_object_or_404(ServerConfiguration, slug=config_name)
+    form = ServerConfigurationForm(instance=config)
+    
+    if request.method == 'POST':
+        form = ServerConfigurationForm(request.POST, request.FILES, instance=config)
+        
+        if form.is_valid():
+            config = form.save()
+            return HttpResponseRedirect(reverse('provisioning:serverconfiguration-edit', args=(config.slug,)))
+    
+    return render_to_response('provisioning/serverconfiguration_edit.html', { 'form': form, 'config': config }, context_instance=RequestContext(request))
 
 def serverconfiguration_view(request, config_name):
     config = { 'name': 'Apache2',  }

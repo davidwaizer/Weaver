@@ -2,7 +2,7 @@
 {% block preform %}{% endblock %}
     {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
     {% for field in form.visible_fields %}
-        <div class="field {{ field.field.widget.name }}{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
+        <span class="field {{ field.field.widget.name }}{% if field.errors %} error{% endif %}{% if field.field.required %} required{% endif %}">
             {% if field.field.widget.name == "checkboxinput" %}
                 <span>
                     {{ field }}
@@ -21,7 +21,7 @@
                 {% if field.help_text %}<p class="help">{{ field.help_text|safe }}</p>{% endif %}
             {% endif %}
             {{ field.errors }}
-        </div>
+        </span>
     {% endfor %}
     {% for field in form.hidden_fields %}
         <div class="hidden">{{ field }}</div>
