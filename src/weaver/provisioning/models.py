@@ -1,10 +1,29 @@
-import datetime
+import datetime, os, linecache
+from os.path import join as pjoin
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from utils.text import slugify
+
+
+def retrieve_keys():
+    keys = []
+    for root, dirs, files in os.walk(settings.SSH_KEYS_DIR, topdown=False):
+        for file in files:
+            path = pjoin(root, file)
+            first_line = linecache.getline(path,1)
+            print first_line
+            if first_line.startswith('ssh-'):
+                keys.append(SSHKey(file_name=file))
+    return keys
+
+class SSHKey(object):
+    def __init__(self, *args, **kwargs):
+        self.file_name = kwargs.get('file_name','')    
 
 
 class ServerType(models.Model):

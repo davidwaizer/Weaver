@@ -42,7 +42,7 @@
                 <h2 class="ir">EC2 Server Administration</h2>
             </div>
             <nav id="nav-main">
-                <ul>
+                <ul class="navigation">
 					<li class="active"><a href="{% url provisioning:index %}">Manage Servers</a></li>
 					<li><a href="/monitoring/">Monitoring</a></li>
 				</ul>
@@ -51,12 +51,9 @@
     </header>
     <div id="main">
 		<div id="sidebar">
-			<!-- 
-			<ul>
-				<li><a href="/provisioning/">Manage Servers</a></li>
-			</ul>
-			-->
+			{% block sidebar %}
 			&nbsp;
+			{% endblock %}
         </div>
 		<div id="content">
 			<nav id="breadcrumb">
@@ -68,6 +65,7 @@
     </div>
     <footer id="foot">
 		<div class="wrap">
+			<!--
         	<h4>Other Information</h4>
 	        <div id="top">
 	            
@@ -75,6 +73,7 @@
 	        <div id="copyright">
 	            &copy; 2011
 	        </div>
+	 		-->
 		</div>
     </footer>
 </div>

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block sidebar %}
+	<ul class="navigation">
+		<li class="active"><a href="{% url provisioning:index %}">{% trans "Overview" %}</a></li>
+		<li><a href="{% url provisioning:serverconfiguration-index %}">{% trans "Server Configurations" %}</a></li>
+	</ul>
+{% endblock %}
