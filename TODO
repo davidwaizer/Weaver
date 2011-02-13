@@ -20,3 +20,7 @@ Everything is missing at this point. Focusing on the UI first.
 
 o Allow user to specify new actions for a particular server configuration
 	- i.e. "Backup", "Rebuild indexes", "Add Slave Database"
+
+o Validate finger prints of local SSH keys (right now it would fail when connecting)
+
+

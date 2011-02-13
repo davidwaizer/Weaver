@@ -3,6 +3,13 @@ from datetime import date
 
 from django.template import Library
 from django.utils.datastructures import SortedDict
+from django.core.urlresolvers import reverse
+from django.utils.safestring import SafeUnicode, SafeString
+
+#from django.utils.html import escape
+#from django.template import Library, Node
+#from django.utils.translation import ugettext as _
+
 
 register = Library()
 
@@ -18,3 +25,26 @@ def formfields(form, fields):
     new_form.fields = SortedDict(new_fields)
     return new_form
 
+@register.filter
+def is_active(request, url):
+	url = reverse(url)
+	if request == None:
+		return False
+	is_active = False	
+	current_url = request.path
+	if url != SafeUnicode('/'):
+		is_active = SafeUnicode(current_url).startswith(url)
+	else:
+		is_active = url == SafeUnicode(current_url)
+
+	return is_active
+
+@register.filter
+def subnav_is_active(request, url):
+	url = reverse(url)
+	if request == None:
+		return False
+	is_active = False
+	current_url = request.path
+	is_active = url == SafeUnicode(current_url)
+	return is_active

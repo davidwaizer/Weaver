@@ -11,16 +11,26 @@
 	<div class="serverconfigurations">
 		<h2>{% trans "New Server Configuration" %}</h2>
 		<form action="" method="post" class="form">
-	        {% csrf_token %}
-	        <div class="form-row">
-	            {{ form|formfields:"name" }}
-	        </div>
-			<div class="form-row">
-	            {{ form|formfields:"base_image" }}
-	        </div>
-			<div class="form-row">
-	            {{ form|formfields:"icon_style" }}
-	        </div>
+	        {% csrf_token %}	
+			<fieldset>
+				<h3>{% trans "General settings" %}</h3>
+		        <div class="form-row">
+		            {{ form|formfields:"name" }}
+		        </div>
+				<div class="form-row">
+		            {{ form|formfields:"icon_style" }}
+		        </div>
+			</fieldset>
+			<fieldset>
+				<h3>{% trans "EC2 settings" %}</h3>
+				<div class="form-row">
+		            {{ form|formfields:"base_image" }}
+		        </div>
+				<div class="form-row">
+		            {{ form|formfields:"public_key" }}
+		        </div>
+			</fieldset>
+
 	        <div class="actions">
 				<span class="primary btn ()"><input type="submit" value="Save" /></a>
 	        </div>

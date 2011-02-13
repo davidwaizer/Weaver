@@ -103,3 +103,16 @@ LANGUAGES = (
 
 # Get the local db settings etc.
 from settingslocal import *
+
+#
+# I store my AWS settings in a .gitignored file
+# 
+from settingsaws import *
+
+
+# Check that we have AWS settings, otherwise freak out.
+try:
+    ak = AWS_ACCESS_KEY
+    sk = AWS_SECRET_KEY  
+except:
+    raise Exception('You have to define your AWS_ACCESS_KEY and AWS_SECRET_KEY in your django settings.')

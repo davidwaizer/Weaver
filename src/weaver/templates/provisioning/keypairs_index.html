@@ -1,0 +1,65 @@
+{% extends "provisioning/base.html" %}
+{% load i18n utils %}
+
+{% block breadcrumb %}
+	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
+	<strong>{% trans "SSH Keys" %}</strong>
+{% endblock %}
+
+{% block primary %}
+	<div class="keypairs">
+		<h2>{% trans "Private keys" %}</h2>
+		<p>{% trans "These are the local private keys that can you use to connect to EC2." %}</p>
+		{% if local_keypairs %}
+			<table>
+				<thead>
+					<th>{% trans "Name" %}</th>
+					<th>{% trans "Path" %}</th>
+				</thead>
+				<tbody>
+			{% for key in local_keypairs %}
+				<tr>
+					<td>{{key.name}}</td>
+					<td>{{key.path}}</td>
+				</tr>
+			{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<div class="notice info ()">
+				<div class="wrap">
+					<h3>{% trans "No private RSA keys were found in your local directory." %}</h3>
+				</div>
+			</div>
+		{% endif %}
+		
+		<h2>{% trans "Public keys" %}</h2>
+		<p>{% trans "These are the public keys that are available to your EC2 instances." %}</p>
+		{% if ec2_keypairs %}
+			<table>
+				<thead>
+					<th>Name</th>
+					<th>Fingerprint</th>
+					<th>Region</th>
+				</thead>
+				<tbody>
+			{% for key in ec2_keypairs %}
+				<tr>
+					<td>{{key.name}}</td>
+					<td>{{key.fingerprint}}</td>
+					<td>{{key.region.name}}</td>
+				</tr>
+			{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<div class="notice info ()">
+				<div class="wrap">
+					<h3>{% trans "No public RSA keys were found for your EC2 installation." %}</h3>
+				</div>
+			</div>
+		{% endif %}
+
+	</div>
+	
+{% endblock %}

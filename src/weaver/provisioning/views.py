@@ -13,8 +13,10 @@ from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 
-from provisioning.models import ServerConfiguration
+from provisioning.models import ServerConfiguration, KeyPairManager
 from provisioning.forms import ServerConfigurationForm
+
+from boto.ec2.connection import EC2Connection
 
 def index(request):
     return render_to_response('provisioning/index.html', {}, context_instance=RequestContext(request))
@@ -44,3 +46,10 @@ def serverconfiguration_edit(request, config_name):
 def serverconfiguration_view(request, config_name):
     config = { 'name': 'Apache2',  }
     return render_to_response('provisioning/serverconfiguration_view.html', { 'config': config }, context_instance=RequestContext(request))
+
+
+def keypairs_index(request):
+    ec2_keypairs = KeyPairManager.get_ec2_public_keys()
+    local_keypairs = KeyPairManager.get_local_private_keys()
+    return render_to_response('provisioning/keypairs_index.html', { 'ec2_keypairs': ec2_keypairs, 'local_keypairs': local_keypairs }, context_instance=RequestContext(request))
+    
