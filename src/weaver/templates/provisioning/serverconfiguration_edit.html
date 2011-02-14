@@ -27,12 +27,17 @@
 		            {{ form|formfields:"base_image,public_key" }}
 		        </div>
 				<div class="form-row">
-		            {{ form|formfields:"base_image_name" }}
-		        </div>
+				        <span class="field">
+				        	<label>AMI name</label>
+				        	<p class="value">{{config.base_image_name}}</p>
+				        </span>
+				</div>
 				<div class="form-row">
-		            {{ form|formfields:"base_image_architecture" }}
+		            <span class="field">
+			        	<label>AMI architecture</label>
+			        	<p class="value">{{config.base_image_architecture}}</p>
+			        </span>
 		        </div>
-		
 			</fieldset>
 
 	        <div class="actions">

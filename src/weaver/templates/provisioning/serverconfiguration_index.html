@@ -1,10 +1,10 @@
 {% extends "provisioning/base.html" %}
-{% load i18n %}
+{% load i18n utils %}
 
 
 {% block breadcrumb %}
 	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
-	<strong>Configurations</strong>
+	<strong>{% trans "Configurations" %}</strong>
 {% endblock %}
 
 {% block primary %}

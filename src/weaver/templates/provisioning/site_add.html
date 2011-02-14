@@ -1,0 +1,36 @@
+{% extends "provisioning/base.html" %}
+{% load i18n utils %}
+
+{% block breadcrumb %}
+	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
+	<a href="{% url provisioning:site-index %}">{% trans "Sites" %}</a> &raquo;
+	<strong>{% trans "New Site" %}</strong>
+{% endblock %}
+
+{% block primary %}
+	<div class="sites">
+		<h2>{% trans "New Site" %}</h2>
+		<form action="" method="post" class="form">
+	        {% csrf_token %}	
+			<fieldset>
+				<div class="form-row">
+		            {{ form|formfields:"name" }}
+		        </div>
+				<div class="form-row">
+		            {{ form|formfields:"url" }}
+		        </div>
+				<div class="form-row">
+		            {{ form|formfields:"configuration" }}
+					<span class="text">
+						<a href="{% url provisioning:serverconfiguration-add %}" onclick="return confirm('Are you sure you want to leave this page?')">{% trans "Add configuration" %}</a>
+					</span>
+		        </div>
+			</fieldset>
+			
+	        <div class="actions">
+				<span class="primary btn ()"><input type="submit" value="Save" /></a></span>
+	        </div>
+	    </form>
+	</div>
+	
+{% endblock %}

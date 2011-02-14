@@ -72,7 +72,7 @@ class ServerConfiguration(models.Model):
     icon_style = models.CharField(_(u'display icon'), max_length=32, choices=SERVERCONFIGURATION_ICONS, default='generic')
     public_key = models.CharField(_(u'public SSH key'), max_length=32, choices=SERVERCONFIGURATION_PUBLIC_KEYS)
     base_image_architecture = models.CharField(_(u'AMI architecture'), max_length=10, blank=True, null=True)
-    base_image_name = models.CharField(_(u'AMI name'), max_length=256, blank=True, null=True)
+    base_image_name = models.CharField(_(u'AMI name'), max_length=255, blank=True, null=True)
     
     def save(self, **kwargs):
         if not self.id:
@@ -86,7 +86,7 @@ class ServerConfiguration(models.Model):
     
     @permalink
     def get_absolute_url(self):
-        return ('server-type-detail', None, {'slug': self.slug})
+        return ('serverconfiguration-edit', None, {'slug': self.slug})
     
     def __unicode__(self):
         return self.name
@@ -112,10 +112,10 @@ class ServerCommand(models.Model):
 
     @permalink
     def get_absolute_url(self):
-        return ('server-command-detail', None, {'slug': self.slug})
+        return ('servercommand-edit', None, {'slug': self.slug})
 
     def __unicode__(self):
-        return self.title
+        return self.name
 
     class Meta:
         verbose_name = _('command')
@@ -127,24 +127,46 @@ class ServerNode(models.Model):
     configuration = models.ForeignKey(ServerConfiguration, name=_('server type'), related_name='server_nodes')
     public_ip = models.CharField(_('ip'), max_length=100, unique=True)
     private_ip = models.CharField(_('ip'), max_length=100, blank=True)
-    public_dns = models.CharField(_('public dns'), max_length=256, blank=True)
-    private_dns = models.CharField(_('private dns'), max_length=256, blank=True)
+    public_dns = models.CharField(_('public dns'), max_length=255, blank=True)
+    private_dns = models.CharField(_('private dns'), max_length=255, blank=True)
     locked = models.BooleanField(_('locked'), default=False)
     
     def save(self, **kwargs):
         if not self.id:
             self.slug = slugify(self.name, instance=self)
-        super(ServerCommand, self).save(**kwargs)
+        super(ServerNode, self).save(**kwargs)
     
     @permalink
     def get_absolute_url(self):
         return ('server-command-detail', None, {'slug': self.slug})
 
     def __unicode__(self):
-        return self.title
+        return self.public_ip
 
     class Meta:
         verbose_name = _('command')
         verbose_name_plural = _('commands')
 
+
+class Site(models.Model):
+    slug = models.CharField(_('slug'), max_length=255, editable=False, unique=True)
+    name = models.CharField(_('name'), max_length=255)
+    url = models.URLField(_('url'), max_length=255, verify_exists=False)
+    configuration = models.ForeignKey(ServerConfiguration, verbose_name=_('deployment configuration'), related_name='sites')
+    servers = models.ManyToManyField(ServerNode, related_name='sites', null=True, blank=True)
     
+    def save(self, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.name, instance=self)
+        super(Site, self).save(**kwargs)
+    
+    @permalink
+    def get_absolute_url(self):
+        return ('site-edit', None, {'slug': self.slug})
+    
+    def __unicode__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = _('site')
+        verbose_name_plural = _('sites')

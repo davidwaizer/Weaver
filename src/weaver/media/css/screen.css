@@ -66,6 +66,8 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 
 .form-row label { display: block; width: auto; }
 .form-row .field { float: left; margin-left: 10px; }
+.form-row .text { margin: 23px 0 0 10px; float: left;  }
+.form-row .field p.value { margin: 3px 0; color: #333;  }
 .aligned .form-row label { display: inline-block; width: 110px; float: left; }
 .form input[type="text"], .form input[type="password"],
 .inline-form input[type="text"], .inline-form input[type="password"] { margin: 0 5px 0 0; font-size: 13px; padding: 3px; color: #666; background-repeat: no-repeat; background-position: right center; }
@@ -104,10 +106,10 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .servers .pane { float: left; display: inline-block; }
 .servers .tier { text-align: center; display: inline-block; width: 100%; }
 .servers .tier .layer { display: inline-block; }
-.servers .layer, .server-legend .layer { text-align: center; border: 1px solid #89a8c1; margin: 10px 0; border-radius: 3px; -moz-border-radius: 3px; }
+.servers .layer, .server-legend .layer { text-align: center; border: 1px solid #89a8c1; margin: 10px 10px; border-radius: 3px; -moz-border-radius: 3px; }
 .servers .layer .wrap, .server-legend .layer .wrap { border: 1px solid #fff; background: #dae4ed; padding: 15px 10px 10px 10px; border-radius: 2px; -moz-border-radius: 2px; }
 
-.servers .layer.dmz, .servers .layer.new, .server-legend .layer.dmz { text-align: center; border: 1px solid #ccc; margin: 10px 0; border-radius: 3px; -moz-border-radius: 3px; }
+.servers .layer.dmz, .servers .layer.new, .server-legend .layer.dmz { text-align: center; border: 1px solid #ccc; border-radius: 3px; -moz-border-radius: 3px; }
 .servers .layer.dmz .wrap, .servers .layer.new .wrap, .server-legend .layer.dmz .wrap { border: 1px solid #fff; background: #efefef;  border-radius: 2px; -moz-border-radius: 2px; }
 .servers .layer.new { border: 1px dotted #666; }
 
@@ -147,4 +149,10 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .serverconfigurations .actions { text-align: right; }
 .serverconfigurations #id_base_image { width: 130px; }
 .serverconfigurations #id_base_image_architecture { width: 100px; }
-.serverconfigurations .form-row input { width: 345px; }
+.serverconfigurations .form-row input { width: 350px; }
+
+
+/* Sites styles */
+.sites { width: 384px; }
+.sites .form-row input { width: 350px; }
+.sites .actions { text-align: right; }

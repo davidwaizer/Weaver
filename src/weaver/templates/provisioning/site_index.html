@@ -1,0 +1,40 @@
+{% extends "provisioning/base.html" %}
+{% load i18n utils %}
+
+{% block breadcrumb %}
+	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
+	<strong>{% trans "Sites" %}</strong>
+{% endblock %}
+
+{% block primary %}
+	<div class="sites">
+		<h2>{% trans "Sites" %}</h2>
+
+		{% if sites %}
+		<table>
+			<thead>
+				<th>Name</th>
+				<th>URL</th>
+			</thead>
+			<tbody>
+	 		{% for site in sites %}
+				<tr>
+					<td><a href="{% url provisioning:site-edit site.slug %}">{{site.name}}</a></td>
+					<td>{{site.url}}</td>
+				</tr>
+	 		{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<div class="notice info ()">
+			<div class="wrap">
+				<h3>{% trans "No sites were found." %}</h3>
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="actions">
+			<span class="primary btn ()"><a href="{% url provisioning:site-add %}">{% trans "New Site" %}</a></span>
+		</div>
+	</div>
+{% endblock %}

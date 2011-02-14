@@ -3,17 +3,17 @@
 
 {% block breadcrumb %}
 	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
-	<a href="{% url provisioning:serverconfiguration-index %}">{% trans "Configurations" %}</a> &raquo;
-	<strong>{{ config.name }}</strong>
+	<a href="{% url provisioning:site-index %}">{% trans "Sites" %}</a> &raquo;
+	<strong>{{ site.name }}</strong>
 {% endblock %}
 
 {% block primary %}
-	<div class="serverconfigurations">
-		<h2>{% trans "Delete" %} {{ config.name }}</h2>
+	<div class="sites">
+		<h2>{% trans "Delete" %} {{ site.name }}</h2>
 		<div class="notice info">
 			<div class="wrap">
-				<h4>{% trans "Are you sure you want to delete this configuration?" %}</h4>
-				<p class="helptext">{% trans "Deleting the configuration will not have any effect on your EC2 image; it will only remove the configuration from this administration interface." %}</p>
+				<h4>{% trans "Are you sure you want to delete this site?" %}</h4>
+				<p class="helptext">{% trans "Deleting the site will not affect any EC2 instances, it will only remove it from this administration interface." %}</p>
 			</div>
 		</div>
 		<form action="" method="post" class="form">
@@ -21,7 +21,7 @@
 			<input id="id_delete" name="delete" type="hidden" value="0" />
 	        <div class="actions">
 				<span class="primary btn ()"><input type="submit" value="{% trans "Yes" %}" onclick="$('#id_delete').val('1'); return true;" /></span>
-				<span class="secondary btn ()"><a href="{% url provisioning:serverconfiguration-edit config.slug %}">{% trans "No" %}</a></span>
+				<span class="secondary btn ()"><a href="{% url provisioning:site-edit site.slug %}">{% trans "No" %}</a></span>
 	        </div>
 	    </form>
 		
