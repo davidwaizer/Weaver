@@ -10,11 +10,11 @@ from management import views
 urlpatterns = patterns('',
 	url(r'^$', views.index, name='index'),
 	
-	url(r'^configurations/$', views.serverconfiguration_index, name='serverconfiguration-index'),
-	url(r'^configurations/add/$', views.serverconfiguration_add, name='serverconfiguration-add'),
-	#url(r'^configurations/(?P<config_name>[-\w]+)/$', views.serverconfiguration_view, name='serverconfiguration-view'),
-	url(r'^configurations/(?P<config_name>[-\w]+)/edit/$', views.serverconfiguration_edit, name='serverconfiguration-edit'),
-	url(r'^configurations/(?P<config_name>[-\w]+)/delete/$', views.serverconfiguration_delete, name='serverconfiguration-delete'),
+	url(r'^configurations/$', views.serverimage_index, name='serverimage-index'),
+	url(r'^configurations/add/$', views.serverimage_add, name='serverimage-add'),
+	#url(r'^configurations/(?P<config_name>[-\w]+)/$', views.serverimage_view, name='serverimage-view'),
+	url(r'^configurations/(?P<config_name>[-\w]+)/edit/$', views.serverimage_edit, name='serverimage-edit'),
+	url(r'^configurations/(?P<config_name>[-\w]+)/delete/$', views.serverimage_delete, name='serverimage-delete'),
 
 	url(r'^key-pairs/$', views.keypairs_index, name='keypairs-index'),
 	

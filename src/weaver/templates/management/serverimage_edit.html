@@ -3,12 +3,12 @@
 
 {% block breadcrumb %}
 	<a href="{% url management:index %}">{% trans "Manage Servers" %}</a> &raquo;
-	<a href="{% url management:serverconfiguration-index %}">{% trans "Configurations" %}</a> &raquo;
+	<a href="{% url management:serverimage-index %}">{% trans "Server Images" %}</a> &raquo;
 	<strong>{{ config.name }}</strong>
 {% endblock %}
 
 {% block primary %}
-	<div class="serverconfigurations">
+	<div class="serverimages">
 		<h2>{% trans "Edit" %} {{ config.name }}</h2>
 		<form action="" method="post" class="form">
 	        {% csrf_token %}	
@@ -42,7 +42,7 @@
 
 	        <div class="actions">
 				<span class="primary btn ()"><input type="submit" value="Save" /></span>
-				<span class="secondary btn ()"><a href="{% url management:serverconfiguration-delete config.slug %}">{% trans "Delete"%}</a></span>
+				<span class="secondary btn ()"><a href="{% url management:serverimage-delete config.slug %}">{% trans "Delete"%}</a></span>
 	        </div>
 	    </form>
 	</div>

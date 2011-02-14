@@ -13,8 +13,8 @@ from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 
-from management.models import ServerConfiguration, KeyPairManager, Site
-from management.forms import ServerConfigurationForm, SiteForm
+from management.models import ServerImage, KeyPairManager, Site
+from management.forms import ServerImageForm, SiteForm
 
 from boto.ec2.connection import EC2Connection
 
@@ -22,47 +22,47 @@ def index(request):
     return render_to_response('management/index.html', {}, context_instance=RequestContext(request))
 
 
-def serverconfiguration_index(request):
-    configs = ServerConfiguration.objects.all()
-    return render_to_response('management/serverconfiguration_index.html', {'configs': configs}, context_instance=RequestContext(request))
+def serverimage_index(request):
+    configs = ServerImage.objects.all()
+    return render_to_response('management/serverimage_index.html', {'configs': configs}, context_instance=RequestContext(request))
     
 
-def serverconfiguration_add(request):
-    form = ServerConfigurationForm()
+def serverimage_add(request):
+    form = ServerImageForm()
     
     if request.method == 'POST':
-        form = ServerConfigurationForm(request.POST)
+        form = ServerImageForm(request.POST)
         
         if form.is_valid():
             config = form.save()
-            return HttpResponseRedirect(reverse('management:serverconfiguration-edit', args=(config.slug,)))
+            return HttpResponseRedirect(reverse('management:serverimage-edit', args=(config.slug,)))
     
-    return render_to_response('management/serverconfiguration_add.html', { 'form': form }, context_instance=RequestContext(request))
+    return render_to_response('management/serverimage_add.html', { 'form': form }, context_instance=RequestContext(request))
 
 
-def serverconfiguration_edit(request, config_name):
-    config = get_object_or_404(ServerConfiguration, slug=config_name)
-    form = ServerConfigurationForm(instance=config)
+def serverimage_edit(request, config_name):
+    config = get_object_or_404(ServerImage, slug=config_name)
+    form = ServerImageForm(instance=config)
     
     if request.method == 'POST':
-        form = ServerConfigurationForm(request.POST, request.FILES, instance=config)
+        form = ServerImageForm(request.POST, request.FILES, instance=config)
         
         if form.is_valid():
             config = form.save()
-            return HttpResponseRedirect(reverse('management:serverconfiguration-edit', args=(config.slug,)))
+            return HttpResponseRedirect(reverse('management:serverimage-edit', args=(config.slug,)))
     
-    return render_to_response('management/serverconfiguration_edit.html', { 'form': form, 'config': config }, context_instance=RequestContext(request))
+    return render_to_response('management/serverimage_edit.html', { 'form': form, 'config': config }, context_instance=RequestContext(request))
 
 
-def serverconfiguration_delete(request, config_name):
-    config = get_object_or_404(ServerConfiguration, slug=config_name)
+def serverimage_delete(request, config_name):
+    config = get_object_or_404(ServerImage, slug=config_name)
     
     if request.method == 'POST':
         if request.POST.get('delete', '0') == '1':
             config.delete()
-            return HttpResponseRedirect(reverse('management:serverconfiguration-index'))
+            return HttpResponseRedirect(reverse('management:serverimage-index'))
     
-    return render_to_response('management/serverconfiguration_delete.html', { 'config': config }, context_instance=RequestContext(request))
+    return render_to_response('management/serverimage_delete.html', { 'config': config }, context_instance=RequestContext(request))
 
 
 def keypairs_index(request):

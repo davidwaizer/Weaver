@@ -4,14 +4,14 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
-from management.models import ServerConfiguration, Site
+from management.models import ServerImage, Site
 from boto.ec2.connection import EC2Connection
 
 from utils import forms
 
-class ServerConfigurationForm(forms.ModelForm):
+class ServerImageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-            super(ServerConfigurationForm, self).__init__(*args, **kwargs)
+            super(ServerImageForm, self).__init__(*args, **kwargs)
             instance = getattr(self, 'instance', None)
             if instance and instance.id:
                 self.fields['base_image_architecture'].widget.attrs['disabled'] = 'disabled'
@@ -40,7 +40,7 @@ class ServerConfigurationForm(forms.ModelForm):
     
     
     class Meta:
-        model = ServerConfiguration
+        model = ServerImage
 
 
 class SiteForm(forms.ModelForm):

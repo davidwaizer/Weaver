@@ -145,11 +145,11 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .servers .layer-form { text-align: center; }
 
 /* Server configuration styles */
-.serverconfigurations { width: 384px; }
-.serverconfigurations .actions { text-align: right; }
-.serverconfigurations #id_base_image { width: 130px; }
-.serverconfigurations #id_base_image_architecture { width: 100px; }
-.serverconfigurations .form-row input { width: 350px; }
+.serverimages { width: 384px; }
+.serverimages .actions { text-align: right; }
+.serverimages #id_base_image { width: 130px; }
+.serverimages #id_base_image_architecture { width: 100px; }
+.serverimages .form-row input { width: 350px; }
 
 
 /* Sites styles */

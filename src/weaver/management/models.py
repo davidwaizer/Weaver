@@ -65,7 +65,7 @@ SERVERCONFIGURATION_ICONS = (
 
 SERVERCONFIGURATION_PUBLIC_KEYS = ((x.name, x.name) for x in KeyPairManager.get_ec2_public_keys())
 
-class ServerConfiguration(models.Model):
+class ServerImage(models.Model):
     slug = models.CharField(_('slug'), max_length=110, editable=False, unique=True)
     name = models.CharField(_('name'), max_length=100)
     base_image = models.CharField(_('AMI image'), max_length=100,)
@@ -82,7 +82,7 @@ class ServerConfiguration(models.Model):
         ami = conn.get_image(self.base_image)
         self.base_image_architecture = ami.architecture
         self.base_image_name = ami.name
-        super(ServerConfiguration, self).save(**kwargs)
+        super(ServerImage, self).save(**kwargs)
     
     @permalink
     def get_absolute_url(self):
@@ -103,7 +103,7 @@ class ServerCommand(models.Model):
     name = models.CharField(_('name'), max_length=100, )
     code = models.TextField(_('summary'), max_length=1000)
     order = models.IntegerField(_('order'))
-    configuration = models.ForeignKey('ServerConfiguration')
+    configuration = models.ForeignKey('ServerImage')
     
     def save(self, **kwargs):
         if not self.id:
@@ -124,7 +124,7 @@ class ServerCommand(models.Model):
 
 
 class ServerNode(models.Model):
-    configuration = models.ForeignKey(ServerConfiguration, name=_('server type'), related_name='server_nodes')
+    configuration = models.ForeignKey(ServerImage, name=_('server type'), related_name='server_nodes')
     public_ip = models.CharField(_('ip'), max_length=100, unique=True)
     private_ip = models.CharField(_('ip'), max_length=100, blank=True)
     public_dns = models.CharField(_('public dns'), max_length=255, blank=True)
@@ -152,7 +152,7 @@ class Site(models.Model):
     slug = models.CharField(_('slug'), max_length=255, editable=False, unique=True)
     name = models.CharField(_('name'), max_length=255)
     url = models.URLField(_('url'), max_length=255, verify_exists=False)
-    configuration = models.ForeignKey(ServerConfiguration, verbose_name=_('deployment configuration'), related_name='sites')
+    configuration = models.ForeignKey(ServerImage, verbose_name=_('deployment configuration'), related_name='sites')
     servers = models.ManyToManyField(ServerNode, related_name='sites', null=True, blank=True)
     
     def save(self, **kwargs):
