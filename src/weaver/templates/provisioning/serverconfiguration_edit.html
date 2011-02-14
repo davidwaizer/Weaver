@@ -36,8 +36,8 @@
 			</fieldset>
 
 	        <div class="actions">
-				<span class="primary btn ()"><input type="submit" value="Save" /></a></span>
-				<span class="secondary btn ()"><input type="submit" value="Delete" /></a></span>
+				<span class="primary btn ()"><input type="submit" value="Save" /></span>
+				<span class="secondary btn ()"><a href="{% url provisioning:serverconfiguration-delete config.slug %}">{% trans "Delete"%}</a></span>
 	        </div>
 	    </form>
 	</div>

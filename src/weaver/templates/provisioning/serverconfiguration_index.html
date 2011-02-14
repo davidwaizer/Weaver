@@ -16,12 +16,14 @@
 			<thead>
 				<th>Name</th>
 				<th>AMI</th>
+				<th>Architecture</th>
 			</thead>
 			<tbody>
 	 		{% for config in configs %}
 				<tr>
 					<td><a href="{% url provisioning:serverconfiguration-edit config.slug %}">{{config.name}}</a></td>
 					<td>{{config.base_image}}</td>
+					<td>{{config.base_image_architecture}}</td>
 				</tr>
 	 		{% endfor %}
 			</tbody>
@@ -29,7 +31,7 @@
 		{% else %}
 		<div class="notice info ()">
 			<div class="wrap">
-				<h3>No server configurations have been added yet.</h3>
+				<h3>{% trans "No server configurations were found." %}</h3>
 			</div>
 		</div>
 		{% endif %}

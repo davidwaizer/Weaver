@@ -124,7 +124,7 @@ class ServerCommand(models.Model):
 
 
 class ServerNode(models.Model):
-    configuration = models.ManyToManyField(ServerConfiguration, name=_('server type'), related_name='server_nodes')
+    configuration = models.ForeignKey(ServerConfiguration, name=_('server type'), related_name='server_nodes')
     public_ip = models.CharField(_('ip'), max_length=100, unique=True)
     private_ip = models.CharField(_('ip'), max_length=100, blank=True)
     public_dns = models.CharField(_('public dns'), max_length=256, blank=True)

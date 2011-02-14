@@ -14,5 +14,6 @@ urlpatterns = patterns('',
 	url(r'^configurations/add/$', views.serverconfiguration_add, name='serverconfiguration-add'),
 	url(r'^configurations/(?P<config_name>[-\w]+)/$', views.serverconfiguration_view, name='serverconfiguration-view'),
 	url(r'^configurations/(?P<config_name>[-\w]+)/edit/$', views.serverconfiguration_edit, name='serverconfiguration-edit'),
+	url(r'^configurations/(?P<config_name>[-\w]+)/delete/$', views.serverconfiguration_delete, name='serverconfiguration-delete'),
 	url(r'^key-pairs/$', views.keypairs_index, name='keypairs-index'),
 )

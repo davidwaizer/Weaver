@@ -53,6 +53,18 @@ def serverconfiguration_edit(request, config_name):
     
     return render_to_response('provisioning/serverconfiguration_edit.html', { 'form': form, 'config': config }, context_instance=RequestContext(request))
 
+def serverconfiguration_delete(request, config_name):
+    config = get_object_or_404(ServerConfiguration, slug=config_name)
+    
+    if request.method == 'POST':
+        if request.POST.get('delete', '0') == '1':
+            config.delete()
+            return HttpResponseRedirect(reverse('provisioning:serverconfiguration-index'))
+    
+    return render_to_response('provisioning/serverconfiguration_delete.html', { 'config': config }, context_instance=RequestContext(request))
+
+
+
 def serverconfiguration_view(request, config_name):
     config = { 'name': 'Apache2',  }
     return render_to_response('provisioning/serverconfiguration_view.html', { 'config': config }, context_instance=RequestContext(request))
