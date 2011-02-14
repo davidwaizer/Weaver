@@ -1,8 +1,8 @@
-{% extends "provisioning/base.html" %}
+{% extends "management/base.html" %}
 {% load i18n utils %}
 
 {% block breadcrumb %}
-	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
+	<a href="{% url management:index %}">{% trans "Manage Servers" %}</a> &raquo;
 	<strong>{% trans "SSH Keys" %}</strong>
 {% endblock %}
 

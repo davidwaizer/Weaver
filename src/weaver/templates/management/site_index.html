@@ -1,8 +1,8 @@
-{% extends "provisioning/base.html" %}
+{% extends "management/base.html" %}
 {% load i18n utils %}
 
 {% block breadcrumb %}
-	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
+	<a href="{% url management:index %}">{% trans "Manage Servers" %}</a> &raquo;
 	<strong>{% trans "Sites" %}</strong>
 {% endblock %}
 
@@ -19,7 +19,7 @@
 			<tbody>
 	 		{% for site in sites %}
 				<tr>
-					<td><a href="{% url provisioning:site-edit site.slug %}">{{site.name}}</a></td>
+					<td><a href="{% url management:site-edit site.slug %}">{{site.name}}</a></td>
 					<td>{{site.url}}</td>
 				</tr>
 	 		{% endfor %}
@@ -34,7 +34,7 @@
 		{% endif %}
 
 		<div class="actions">
-			<span class="primary btn ()"><a href="{% url provisioning:site-add %}">{% trans "New Site" %}</a></span>
+			<span class="primary btn ()"><a href="{% url management:site-add %}">{% trans "New Site" %}</a></span>
 		</div>
 	</div>
 {% endblock %}

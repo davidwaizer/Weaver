@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n utils %}
+
+{% block sidebar %}
+	<ul class="navigation">
+		<li {% if request|is_active:"management:index" %}class="active"{% endif %}><a href="{% url management:index %}">{% trans "Overview" %}</a></li>
+		<li {% if request|is_active:"management:serverconfiguration-index" %}class="active"{% endif %}><a href="{% url management:serverconfiguration-index %}">{% trans "Server Configurations" %}</a></li>
+		<li {% if request|is_active:"management:site-index" %}class="active"{% endif %}><a href="{% url management:site-index %}">{% trans "Sites" %}</a></li>
+		<li {% if request|is_active:"management:keypairs-index" %}class="active"{% endif %}><a href="{% url management:keypairs-index %}">{% trans "SSH Keys" %}</a></li>
+	</ul>
+{% endblock %}
+
+
+
+

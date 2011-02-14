@@ -1,9 +1,9 @@
-{% extends "provisioning/base.html" %}
+{% extends "management/base.html" %}
 {% load i18n utils %}
 
 
 {% block breadcrumb %}
-	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
+	<a href="{% url management:index %}">{% trans "Manage Servers" %}</a> &raquo;
 	<strong>{% trans "Configurations" %}</strong>
 {% endblock %}
 
@@ -21,7 +21,7 @@
 			<tbody>
 	 		{% for config in configs %}
 				<tr>
-					<td><a href="{% url provisioning:serverconfiguration-edit config.slug %}">{{config.name}}</a></td>
+					<td><a href="{% url management:serverconfiguration-edit config.slug %}">{{config.name}}</a></td>
 					<td>{{config.base_image}}</td>
 					<td>{{config.base_image_architecture}}</td>
 				</tr>
@@ -37,7 +37,7 @@
 		{% endif %}
 
 		<div class="actions">
-			<span class="primary btn ()"><a href="{% url provisioning:serverconfiguration-add %}">{% trans "New Server Configuration" %}</a></span>
+			<span class="primary btn ()"><a href="{% url management:serverconfiguration-add %}">{% trans "New Server Configuration" %}</a></span>
 		</div>
 	</div>
 {% endblock %}

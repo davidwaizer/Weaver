@@ -1,9 +1,9 @@
-{% extends "provisioning/base.html" %}
+{% extends "management/base.html" %}
 {% load i18n utils %}
 
 {% block breadcrumb %}
-	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
-	<a href="{% url provisioning:site-index %}">{% trans "Sites" %}</a> &raquo;
+	<a href="{% url management:index %}">{% trans "Manage Servers" %}</a> &raquo;
+	<a href="{% url management:site-index %}">{% trans "Sites" %}</a> &raquo;
 	<strong>{% trans "New Site" %}</strong>
 {% endblock %}
 
@@ -22,7 +22,7 @@
 				<div class="form-row">
 		            {{ form|formfields:"configuration" }}
 					<span class="text">
-						<a href="{% url provisioning:serverconfiguration-add %}" onclick="return confirm('Are you sure you want to leave this page?')">{% trans "Add configuration" %}</a>
+						<a href="{% url management:serverconfiguration-add %}" onclick="return confirm('Are you sure you want to leave this page?')">{% trans "Add configuration" %}</a>
 					</span>
 		        </div>
 			</fieldset>

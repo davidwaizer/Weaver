@@ -93,7 +93,7 @@ INSTALLED_APPS = (
     'south',
     
     'core',
-    'provisioning',
+    'management',
     'utils',
 )
 

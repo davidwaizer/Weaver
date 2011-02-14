@@ -1,9 +1,9 @@
-{% extends "provisioning/base.html" %}
+{% extends "management/base.html" %}
 {% load i18n utils %}
 
 {% block breadcrumb %}
-	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
-	<a href="{% url provisioning:serverconfiguration-index %}">{% trans "Configurations" %}</a> &raquo;
+	<a href="{% url management:index %}">{% trans "Manage Servers" %}</a> &raquo;
+	<a href="{% url management:serverconfiguration-index %}">{% trans "Configurations" %}</a> &raquo;
 	<strong>{{ config.name }}</strong>
 {% endblock %}
 
@@ -21,7 +21,7 @@
 			<input id="id_delete" name="delete" type="hidden" value="0" />
 	        <div class="actions">
 				<span class="primary btn ()"><input type="submit" value="{% trans "Yes" %}" onclick="$('#id_delete').val('1'); return true;" /></span>
-				<span class="secondary btn ()"><a href="{% url provisioning:serverconfiguration-edit config.slug %}">{% trans "No" %}</a></span>
+				<span class="secondary btn ()"><a href="{% url management:serverconfiguration-edit config.slug %}">{% trans "No" %}</a></span>
 	        </div>
 	    </form>
 		

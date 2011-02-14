@@ -1,9 +1,9 @@
-{% extends "provisioning/base.html" %}
+{% extends "management/base.html" %}
 {% load i18n utils %}
 
 {% block breadcrumb %}
-	<a href="{% url provisioning:index %}">{% trans "Manage Servers" %}</a> &raquo;
-	<a href="{% url provisioning:site-index %}">{% trans "Sites" %}</a> &raquo;
+	<a href="{% url management:index %}">{% trans "Manage Servers" %}</a> &raquo;
+	<a href="{% url management:site-index %}">{% trans "Sites" %}</a> &raquo;
 	<strong>{{ site.name }}</strong>
 {% endblock %}
 
@@ -22,14 +22,14 @@
 				<div class="form-row">
 		            {{ form|formfields:"configuration" }}
 					<span class="text">
-						<a href="{% url provisioning:serverconfiguration-add %}" onclick="return confirm('Are you sure you want to leave this page?')">{% trans "Add configuration" %}</a>
+						<a href="{% url management:serverconfiguration-add %}" onclick="return confirm('Are you sure you want to leave this page?')">{% trans "Add configuration" %}</a>
 					</span>
 		        </div>	
 			</fieldset>
 			
 	        <div class="actions">
 				<span class="primary btn ()"><input type="submit" value="Save" /></span>
-				<span class="secondary btn ()"><a href="{% url provisioning:site-delete site.slug %}">{% trans "Delete"%}</a></span>
+				<span class="secondary btn ()"><a href="{% url management:site-delete site.slug %}">{% trans "Delete"%}</a></span>
 	        </div>
 	    </form>
 	</div>

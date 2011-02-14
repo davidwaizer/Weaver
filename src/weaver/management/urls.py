@@ -5,7 +5,7 @@ from django.conf.urls.defaults import *
 from django.utils.http import urlquote
 
 
-from provisioning import views
+from management import views
 
 urlpatterns = patterns('',
 	url(r'^$', views.index, name='index'),

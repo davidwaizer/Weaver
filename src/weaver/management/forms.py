@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
-from provisioning.models import ServerConfiguration, Site
+from management.models import ServerConfiguration, Site
 from boto.ec2.connection import EC2Connection
 
 from utils import forms
