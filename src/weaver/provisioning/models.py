@@ -70,11 +70,18 @@ class ServerConfiguration(models.Model):
     name = models.CharField(_('name'), max_length=100)
     base_image = models.CharField(_('AMI image'), max_length=100,)
     icon_style = models.CharField(_(u'display icon'), max_length=32, choices=SERVERCONFIGURATION_ICONS, default='generic')
-    public_key = models.CharField(_(u'Public SSH key'), max_length=32, choices=SERVERCONFIGURATION_PUBLIC_KEYS)
+    public_key = models.CharField(_(u'public SSH key'), max_length=32, choices=SERVERCONFIGURATION_PUBLIC_KEYS)
+    base_image_architecture = models.CharField(_(u'AMI architecture'), max_length=10, blank=True, null=True)
+    base_image_name = models.CharField(_(u'AMI name'), max_length=256, blank=True, null=True)
     
     def save(self, **kwargs):
         if not self.id:
             self.slug = slugify(self.name, instance=self)
+        
+        conn = EC2Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
+        ami = conn.get_image(self.base_image)
+        self.base_image_architecture = ami.architecture
+        self.base_image_name = ami.name
         super(ServerConfiguration, self).save(**kwargs)
     
     @permalink

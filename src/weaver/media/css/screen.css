@@ -72,14 +72,17 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .form .actions { text-align: right; margin: 5px 0; }
 .form .help { font-size: 11px; color: #666; }
 
-.primary.btn { vertical-align: top; margin: 1px 0 0 0; display: inline-block; border: 1px solid #c5c5c5;  border-radius: 3px; -moz-border-radius: 3px; }
-.primary.btn a { font-size: 11px; text-decoration: none; color: #333; font-weight: bold; display: inline-block; padding: 0 5px; background: url(../img/btn_bg.png); height: 22px; line-height: 22px;  }
-.primary.btn input { margin: 0; border: 0; font-size: 11px; color: #333; font-weight: bold; display: inline-block; padding: 0 5px; background: url(../img/btn_bg.png); height: 22px; line-height: 21px;  }
-.primary.btn.hover {  border: 1px solid #4a5764; }
-.primary.btn.hover a { background: #3a424e url(../img/nav_bg.png) repeat-x top left; color: #fff; text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7); }
-.primary.btn.hover input { cursor: pointer; background: #3a424e url(../img/nav_bg.png) repeat-x top left; color: #fff; text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7); }
-.form .primary.btn a { font-size: 12px; padding: 0 10px; height: 30px; line-height: 30px; }
-.form .primary.btn input { font-size: 12px; padding: 0 10px; height: 30px; line-height: 29px; }
+.primary.btn, .secondary.btn { vertical-align: top; margin: 1px 0 0 0; display: inline-block; border: 1px solid #c5c5c5;  border-radius: 3px; -moz-border-radius: 3px; }
+.primary.btn a, .secondary.btn a { font-size: 11px; text-decoration: none; color: #333; font-weight: bold; display: inline-block; padding: 0 5px; background: url(../img/btn_bg.png); height: 22px; line-height: 22px;  }
+.primary.btn input, .secondary.btn input { margin: 0; border: 0; font-size: 11px; color: #333; font-weight: bold; display: inline-block; padding: 0 5px; background: url(../img/btn_bg.png); height: 22px; line-height: 21px;  }
+
+.secondary.btn a, .secondary.btn input { background: url(../img/alt_btn_bg.png); font-size: 11px; color: #333; }
+
+.primary.btn.hover, .secondary.btn.hover {  border: 1px solid #4a5764; }
+.primary.btn.hover a, .secondary.btn.hover a { background: #3a424e url(../img/nav_bg.png) repeat-x top left; color: #fff; text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7); }
+.primary.btn.hover input, .secondary.btn.hover input { cursor: pointer; background: #3a424e url(../img/nav_bg.png) repeat-x top left; color: #fff; text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7); }
+.form .primary.btn a, .form .secondary.btn a { font-size: 12px; padding: 0 10px; height: 30px; line-height: 30px; }
+.form .primary.btn input, .form .secondary.btn input { font-size: 12px; padding: 0 10px; height: 30px; line-height: 29px; }
 
 .form .error {  }
 .form .errorlist { list-style-type: none; margin: 5px 0 5px 2px; padding: 0; }
@@ -88,7 +91,6 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .notice { background: #efefef; border: 1px solid #a8a8a8; border-radius: 3px; -moz-border-radius: 3px; margin: 10px 0; }
 .notice .wrap { padding: 5px 10px; border: 1px solid #fff; border-radius: 2px; -moz-border-radius: 2px; }
 .notice h3 { color: #333; margin: 5px 0; font-weight: normal; font-size: 12px; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
-
 
 
 /* Server overview styles */
@@ -138,4 +140,5 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .serverconfigurations { width: 384px; }
 .serverconfigurations .actions { text-align: right; }
 .serverconfigurations #id_base_image { width: 130px; }
+.serverconfigurations #id_base_image_architecture { width: 100px; }
 .serverconfigurations .form-row input { width: 345px; }
