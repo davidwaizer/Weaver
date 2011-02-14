@@ -2,6 +2,8 @@
 body { margin: 0; font-family: helvetica, arial, freesans, clean, sans-serif; font-size: 12px; text-align: center; }
 body #container { width: 960px; margin: 0 auto; text-align: left; }
 
+footer, header, nav { display: block; }
+
 a { color: #3e6eab; outline: 0; }
 
 a:hover { color: #0066cc; }
@@ -129,6 +131,8 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .servers .layer .generic { background-image: url(../img/server.png); }
 .servers .layer .email { background-image: url(../img/server.png); }
 .servers .layer .queue { background-image: url(../img/server.png); }
+
+.servers .layer-form { text-align: center; }
 
 /* Server configuration styles */
 .serverconfigurations { width: 384px; }
