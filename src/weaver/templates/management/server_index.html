@@ -1,0 +1,41 @@
+{% extends "management/base.html" %}
+{% load i18n utils %}
+
+
+{% block breadcrumb %}
+	<a href="{% url management:index %}">{% trans "Manage Server Instances" %}</a> &raquo;
+	<strong>{% trans "Servers" %}</strong>
+{% endblock %}
+
+{% block primary %}
+	<div class="servers">
+		<h2>Servers</h2>
+		
+		{% if configs %}
+		<table>
+			<thead>
+				<th>Name</th>
+				<th>IP address</th>
+			</thead>
+			<tbody>
+	 		{% for server in servers %}
+				<tr>
+					<td><a href="{% url management:server-edit server.slug %}">{{server.name}}</a></td>
+					<td>{{server.ip_address}}</td>
+				</tr>
+	 		{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<div class="notice info ()">
+			<div class="wrap">
+				<h3>{% trans "No server instances were found." %}</h3>
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="actions">
+			<span class="primary btn ()"><a href="{% url management:server-add %}">{% trans "New Server Instance" %}</a></span>
+		</div>
+	</div>
+{% endblock %}

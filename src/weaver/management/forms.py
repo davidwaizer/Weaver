@@ -4,10 +4,11 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
-from management.models import ServerImage, Site
+from management.models import ServerImage, Site, Server
 from boto.ec2.connection import EC2Connection
 
 from utils import forms
+
 
 class ServerImageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -30,7 +31,7 @@ class ServerImageForm(forms.ModelForm):
                 msg = _(u"The AMI image you entered is not available.")
                 self._errors["base_image"] = self.error_class([msg])
                 del cleaned_data["base_image"]    
-            
+        
         except:
             msg = _(u"The AMI image you entered does not exist.")
             self._errors["base_image"] = self.error_class([msg])
@@ -47,6 +48,12 @@ class SiteForm(forms.ModelForm):
     
     class Meta:
         model = Site
+
+        
+class ServerForm(forms.ModelForm):
+    
+    class Meta:
+        model = Server
 
 
 

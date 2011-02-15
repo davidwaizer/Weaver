@@ -22,5 +22,10 @@ urlpatterns = patterns('',
 	url(r'^sites/add/$', views.site_add, name='site-add'),
 	url(r'^sites/(?P<site_slug>[-\w]+)/edit/$', views.site_edit, name='site-edit'),
 	url(r'^sites/(?P<site_slug>[-\w]+)/delete/$', views.site_delete, name='site-delete'),
-
+    
+	url(r'^servers/$', views.server_index, name='server-index'),	
+	url(r'^servers/add/$', views.server_add, name='server-add'),
+	url(r'^servers/(?P<server_slug>[-\w]+)/edit/$', views.server_edit, name='server-edit'),
+	url(r'^servers/(?P<server_slug>[-\w]+)/delete/$', views.server_delete, name='server-delete'),
+    
 )

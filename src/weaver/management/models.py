@@ -11,13 +11,40 @@ from boto.ec2.connection import EC2Connection
 
 from utils.text import slugify
 
+
+class ServerInstanceManager(object):
     
+    @staticmethod
+    def get_all_instances():
+        local_instances = Server.objects.all()
+        ec2_instances = ServerInstanceManager.get_all_ec2_instances()
+        
+        servers = {}
+        
+        #for x in local_instances:
+        #    servers[x.instance_id] = 
+            
+        
+        
+
+    @staticmethod
+    def get_all_ec2_instances():
+        conn = EC2Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
+        reservations = conn.get_all_instances()
+        instances = []
+        for res in reservations:
+            for instance in res.instances:
+                instances.add(instance)
+        
+        return instances
+    
+        
 class AmiManager(object):
     @staticmethod
     def get_all():
         conn = EC2Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
         return conn.get_all_images()
-
+    
 
 class KeyPairManager(object):
     @staticmethod
@@ -61,7 +88,6 @@ SERVERCONFIGURATION_ICONS = (
             ('email', _(u'Email Server')),
             ('cache', _(u'Cache Server')),
         )
-
 
 SERVERCONFIGURATION_PUBLIC_KEYS = ((x.name, x.name) for x in KeyPairManager.get_ec2_public_keys())
 
@@ -122,30 +148,28 @@ class ServerCommand(models.Model):
         verbose_name_plural = _('commands')
     
 
-
-class ServerNode(models.Model):
+class Server(models.Model):
+    slug = models.CharField(_('slug'), max_length=110, editable=False, unique=True)
     configuration = models.ForeignKey(ServerImage, name=_('server type'), related_name='server_nodes')
-    public_ip = models.CharField(_('ip'), max_length=100, unique=True)
-    private_ip = models.CharField(_('ip'), max_length=100, blank=True)
-    public_dns = models.CharField(_('public dns'), max_length=255, blank=True)
-    private_dns = models.CharField(_('private dns'), max_length=255, blank=True)
-    locked = models.BooleanField(_('locked'), default=False)
+    instance_id = models.CharField(_('instance_id'), max_length=100, unique=True)
+    public_dns = models.CharField(_('public dns'), max_length=255, unique=True, editable=False)
+    private_dns = models.CharField(_('private dns'), max_length=255, unique=True, editable=False)
     
     def save(self, **kwargs):
         if not self.id:
-            self.slug = slugify(self.name, instance=self)
+            self.slug = slugify(self.public_dns, instance=self)
         super(ServerNode, self).save(**kwargs)
     
     @permalink
     def get_absolute_url(self):
-        return ('server-command-detail', None, {'slug': self.slug})
-
+        return ('server-edit', None, {'slug': self.slug})
+        
     def __unicode__(self):
-        return self.public_ip
+        return self.public_dns
 
     class Meta:
-        verbose_name = _('command')
-        verbose_name_plural = _('commands')
+        verbose_name = _('server instance')
+        verbose_name_plural = _('server instance')
 
 
 class Site(models.Model):
@@ -153,7 +177,8 @@ class Site(models.Model):
     name = models.CharField(_('name'), max_length=255)
     url = models.URLField(_('url'), max_length=255, verify_exists=False)
     configuration = models.ForeignKey(ServerImage, verbose_name=_('deployment configuration'), related_name='sites')
-    servers = models.ManyToManyField(ServerNode, related_name='sites', null=True, blank=True)
+    servers = models.ManyToManyField(Server, related_name='sites', null=True, blank=True)
+    
     
     def save(self, **kwargs):
         if not self.id:
@@ -170,3 +195,4 @@ class Site(models.Model):
     class Meta:
         verbose_name = _('site')
         verbose_name_plural = _('sites')
+

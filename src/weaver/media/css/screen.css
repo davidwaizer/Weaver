@@ -71,7 +71,7 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .aligned .form-row label { display: inline-block; width: 110px; float: left; }
 .form input[type="text"], .form input[type="password"],
 .inline-form input[type="text"], .inline-form input[type="password"] { margin: 0 5px 0 0; font-size: 13px; padding: 3px; color: #666; background-repeat: no-repeat; background-position: right center; }
-.form .actions { text-align: right; margin: 5px 0; }
+.actions { text-align: right; margin: 5px 0; }
 .form .help { font-size: 11px; color: #666; }
 
 .primary.btn, .secondary.btn { vertical-align: top; margin: 1px 0 0 0; display: inline-block; border: 1px solid #c5c5c5;  border-radius: 3px; -moz-border-radius: 3px; }

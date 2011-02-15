@@ -13,8 +13,8 @@ from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 
-from management.models import ServerImage, KeyPairManager, Site
-from management.forms import ServerImageForm, SiteForm
+from management.models import ServerImage, KeyPairManager, Site, Server
+from management.forms import ServerImageForm, SiteForm, ServerForm
 
 from boto.ec2.connection import EC2Connection
 
@@ -112,3 +112,47 @@ def site_delete(request, site_slug):
             return HttpResponseRedirect(reverse('management:site-index'))
 
     return render_to_response('management/site_delete.html', { 'site': site }, context_instance=RequestContext(request))
+
+
+def server_index(request):
+    servers = Server.objects.all()
+    return render_to_response('management/server_index.html', { 'servers': servers }, context_instance=RequestContext(request))
+    
+    
+def server_add(request):
+    form = ServerForm()
+
+    if request.method == 'POST':
+        form = ServerForm(request.POST)
+        
+        if form.is_valid():
+            server = form.save()
+            return HttpResponseRedirect(reverse('management:server-edit', args=(server.slug,)))
+
+    return render_to_response('management/server_add.html', { 'form': form }, context_instance=RequestContext(request))
+
+
+def server_edit(request, server_slug):
+    server = get_object_or_404(Server, slug=server_slug)
+    form = ServerForm(instance=server)
+
+    if request.method == 'POST':
+        form = ServerForm(request.POST, request.FILES, instance=server)
+        
+        if form.is_valid():
+            server = form.save()
+            return HttpResponseRedirect(reverse('management:server-edit', args=(server.slug,)))
+
+    return render_to_response('management/server_edit.html', { 'form': form, 'server': server }, context_instance=RequestContext(request))
+
+
+def server_delete(request, server_slug):
+    server = get_object_or_404(Site, slug=server_slug)
+    
+    if request.method == 'POST':
+        if request.POST.get('delete', '0') == '1':
+            server.delete()
+            return HttpResponseRedirect(reverse('management:server-index'))
+    
+    return render_to_response('management/server_delete.html', { 'server': server }, context_instance=RequestContext(request))
+

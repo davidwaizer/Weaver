@@ -4,8 +4,9 @@
 {% block sidebar %}
 	<ul class="navigation">
 		<li {% if request|is_active:"management:index" %}class="active"{% endif %}><a href="{% url management:index %}">{% trans "Overview" %}</a></li>
-		<li {% if request|is_active:"management:serverimage-index" %}class="active"{% endif %}><a href="{% url management:serverimage-index %}">{% trans "Server Images" %}</a></li>
 		<li {% if request|is_active:"management:site-index" %}class="active"{% endif %}><a href="{% url management:site-index %}">{% trans "Sites" %}</a></li>
+		<li {% if request|is_active:"management:server-index" %}class="active"{% endif %}><a href="{% url management:server-index %}">{% trans "Server Instances" %}</a></li>
+		<li {% if request|is_active:"management:serverimage-index" %}class="active"{% endif %}><a href="{% url management:serverimage-index %}">{% trans "Server Images" %}</a></li>
 		<li {% if request|is_active:"management:keypairs-index" %}class="active"{% endif %}><a href="{% url management:keypairs-index %}">{% trans "SSH Keys" %}</a></li>
 	</ul>
 {% endblock %}
