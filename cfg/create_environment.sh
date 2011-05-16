@@ -1,0 +1,1 @@
+virtualenv -p=/usr/local/Cellar/python/2.7.1/bin/python

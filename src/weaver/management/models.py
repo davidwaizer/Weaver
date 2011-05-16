@@ -12,38 +12,61 @@ from boto.ec2.connection import EC2Connection
 from utils.text import slugify
 
 
-class ServerInstanceManager(object):
+class EC2Helper(object):
+    @staticmethod
+    def get_owner_id():
+        """ 
+        We have to get this information from the security group object,
+        since the user will always have a security group.
+        """
+        conn = EC2Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
+        groups = conn.get_all_security_groups()
+        if groups and len(groups) > 0:
+            return groups[0].owner_id
+        return None
     
     @staticmethod
     def get_all_instances():
-        local_instances = Server.objects.all()
-        ec2_instances = ServerInstanceManager.get_all_ec2_instances()
-        
-        servers = {}
-        
-        #for x in local_instances:
-        #    servers[x.instance_id] = 
-            
-        
-        
-
-    @staticmethod
-    def get_all_ec2_instances():
         conn = EC2Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
         reservations = conn.get_all_instances()
         instances = []
         for res in reservations:
             for instance in res.instances:
-                instances.add(instance)
-        
+                instance.reservation = res
+                instances.append(instance)
         return instances
     
-        
-class AmiManager(object):
     @staticmethod
-    def get_all():
+    def get_images(image_ids):
+        """ Gets the AMI images that match the image_ids supplied """
+        if not image_ids:
+            return []
         conn = EC2Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
-        return conn.get_all_images()
+        return conn.get_all_images(image_ids=image_ids)
+    
+    @staticmethod
+    def get_my_images():
+        """ Returns the AMI images that I have created """
+        conn = EC2Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
+        owner_id = EC2Helper.get_owner_id()
+        
+        if owner_id:
+            return conn.get_all_images(owners=[owner_id,])
+        else:
+            return []
+    
+    @staticmethod
+    def get_my_instance_images():
+        """ Gets the AMI images that I have running (regardless of who they belong to) """
+        conn = EC2Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
+        image_ids = set([x.image_id for x in EC2Helper.get_all_instances()])
+        return EC2Helper.get_images(image_ids)
+    
+    @staticmethod
+    def get_image(ami_name):
+        """ Gets an arbitrary AMI image """
+        conn = EC2Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
+        return conn.get_image(ami_name)
     
 
 class KeyPairManager(object):
@@ -91,35 +114,99 @@ SERVERCONFIGURATION_ICONS = (
 
 SERVERCONFIGURATION_PUBLIC_KEYS = ((x.name, x.name) for x in KeyPairManager.get_ec2_public_keys())
 
-class ServerImage(models.Model):
-    slug = models.CharField(_('slug'), max_length=110, editable=False, unique=True)
-    name = models.CharField(_('name'), max_length=100)
-    base_image = models.CharField(_('AMI image'), max_length=100,)
-    icon_style = models.CharField(_(u'display icon'), max_length=32, choices=SERVERCONFIGURATION_ICONS, default='generic')
-    public_key = models.CharField(_(u'public SSH key'), max_length=32, choices=SERVERCONFIGURATION_PUBLIC_KEYS)
-    base_image_architecture = models.CharField(_(u'AMI architecture'), max_length=10, blank=True, null=True)
-    base_image_name = models.CharField(_(u'AMI name'), max_length=255, blank=True, null=True)
+
+class ServerImageManager(models.Manager):
     
-    def save(self, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.name, instance=self)
+    def get_all(self):
+        server_images = self.all()
         
-        conn = EC2Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
-        ami = conn.get_image(self.base_image)
-        self.base_image_architecture = ami.architecture
-        self.base_image_name = ami.name
-        super(ServerImage, self).save(**kwargs)
+        
+        instances = EC2Helper.get_all_instances()
+        
+        # First get the amis that you created
+        ami_images = EC2Helper.get_my_images()
+        
+        # Get all distinct amis.
+        my_ami_ids = [x.id for x in ami_images]
+        saved_ami_ids = [x.ami_id for x in server_images]
+        instance_ami_ids = [x.image_id for x in instances]
+        
+        # Next, we need to fetch the AMI data from AWS
+        # for the AMIs that we don't already have.
+        all_ami_ids = set(my_ami_ids + saved_ami_ids + instance_ami_ids)
+        needed_ami_ids = all_ami_ids - set(my_ami_ids)
+        
+        # Add the amis that we dont have
+        ami_images = ami_images + EC2Helper.get_images(list(needed_ami_ids))
+        
+        all_server_images = []
+        
+        for ami in ami_images:
+            
+            matches = [x for x in server_images if x.ami_id == ami.id]
+            server_image = matches[0] if matches else None
+            
+            if not server_image:
+                server_image = ServerImage(ami=ami)
+            else:
+                server_image.ami = ami
+            
+            if not server_image.name:
+                server_image.name = ami.name if ami.name else ""
+            
+            instance_count = len([x for x in instances if x.image_id == ami.id])
+            server_image.instance_count = instance_count
+            all_server_images.append(server_image)
+        
+        return all_server_images
+        
+        
+        
+
+class ServerImage(models.Model):
+    _cached_ami = None
+    instance_count = 0
+    name = models.CharField(_('name'), max_length=100, blank=True, null=True)
+    ami_id = models.CharField(_('AMI'), max_length=100, unique=True)
+    icon_style = models.CharField(_(u'display icon'), max_length=32, choices=SERVERCONFIGURATION_ICONS, default='generic')
+    
+    objects = ServerImageManager()
+    
+    def __init__(self, *args, **kwargs):
+        self._cached_ami = kwargs.pop('ami', None)
+        if self._cached_ami:
+            self.ami_id = self._cached_ami.id
+        
+        self.instance_count = kwargs.pop('instance_count', 0)
+        super(ServerImage, self).__init__(*args, **kwargs)
+    
+    def _get_ami(self):
+        """ Gets the underlying ami """
+        if not self._cached_ami and ami_id:
+            self._cached_ami = EC2Helper.get_image(self.ami_id)
+        return self._cached_ami
+        
+    def _set_ami(self, ami):
+        """ Sets the underlying ami """
+        self._cached_ami = ami
+    
+    ami = property(_get_ami, _set_ami)
+    
+    #def save(self, **kwargs):
+    #    if not self.ami_id:
+    #        raise Exception('The AMI id needs to be specified in order to save.')
+    #    super(ServerImage, self).save(**kwargs)
     
     @permalink
     def get_absolute_url(self):
-        return ('serverconfiguration-edit', None, {'slug': self.slug})
+        return ('serverconfiguration-edit', None, {'ami_id': self.ami_id})
     
     def __unicode__(self):
         return self.name
     
     class Meta:
-        verbose_name = _('server configuration')
-        verbose_name_plural = _('server configurations')
+        verbose_name = _('server image')
+        verbose_name_plural = _('server images')
     
 
 

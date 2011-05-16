@@ -145,7 +145,7 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .servers .layer-form { text-align: center; }
 
 /* Server configuration styles */
-.serverimages { width: 384px; }
+.serverimages {  }
 .serverimages .actions { text-align: right; }
 .serverimages #id_base_image { width: 130px; }
 .serverimages #id_base_image_architecture { width: 100px; }

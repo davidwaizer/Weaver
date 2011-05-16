@@ -9,21 +9,29 @@
 
 {% block primary %}
 	<div class="serverimages">
-		<h2>Server images</h2>
+		<h2>Server Images</h2>
 		
-		{% if configs %}
+		{% if images %}
 		<table>
 			<thead>
-				<th>Name</th>
 				<th>AMI</th>
+				<th>Name</th>
+				<th>Public</th>
+				<th>Region</th>
+				<th>Instances</th>
+				<th>Type</th>
 				<th>Architecture</th>
 			</thead>
 			<tbody>
-	 		{% for config in configs %}
+	 		{% for image in images %}
 				<tr>
-					<td><a href="{% url management:serverimage-edit config.slug %}">{{config.name}}</a></td>
-					<td>{{config.base_image}}</td>
-					<td>{{config.base_image_architecture}}</td>
+					<td><a href="{% url management:serverimage-manage image.ami.id %}">{{image.ami.id}}</a></td>
+					<td>{{image.name}}</td>
+					<td>{% if image.ami.is_public %}Yes{% else %}No{% endif %}</td>
+					<td>{{image.ami.region.name}}</td>
+					<td>{{image.instance_count}}</td>
+					<td>{{image.ami.root_device_type}}</td>
+					<td>{{image.ami.architecture}}</td>
 				</tr>
 	 		{% endfor %}
 			</tbody>
@@ -35,10 +43,11 @@
 			</div>
 		</div>
 		{% endif %}
-
+		<!-- 
 		<div class="actions">
-			<span class="primary btn ()"><a href="{% url management:serverimage-add %}">{% trans "New Server Image" %}</a></span>
+			<span class="primary btn ()"><a href="#">{% trans "New Server Image" %}</a></span>
 		</div>
+		-->
 	</div>
 {% endblock %}
 	

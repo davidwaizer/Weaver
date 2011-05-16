@@ -4,16 +4,16 @@
 {% block breadcrumb %}
 	<a href="{% url management:index %}">{% trans "Manage Servers" %}</a> &raquo;
 	<a href="{% url management:serverimage-index %}">{% trans "Server Images" %}</a> &raquo;
-	<strong>{{ config.name }}</strong>
+	<strong>{{ image.ami_id }}</strong>
 {% endblock %}
 
 {% block primary %}
 	<div class="serverimages">
-		<h2>{% trans "Edit" %} {{ config.name }}</h2>
-		<form action="" method="post" class="form">
-	        {% csrf_token %}	
+		<h2>{% trans "Manage" %} {{ image.ami_id }}</h2>
+		<form action="." method="post" class="form">
+	        {% csrf_token %}
 			<fieldset>
-				<h3>{% trans "General settings" %}</h3>
+				<h3>{% trans "Weaver settings" %}</h3>
 		        <div class="form-row">
 		            {{ form|formfields:"name" }}
 		        </div>
@@ -29,20 +29,20 @@
 				<div class="form-row">
 				        <span class="field">
 				        	<label>AMI name</label>
-				        	<p class="value">{{config.base_image_name}}</p>
+				        	<p class="value">{{image.base_image_name}}</p>
 				        </span>
 				</div>
 				<div class="form-row">
 		            <span class="field">
 			        	<label>AMI architecture</label>
-			        	<p class="value">{{config.base_image_architecture}}</p>
+			        	<p class="value">{{image.base_image_architecture}}</p>
 			        </span>
 		        </div>
 			</fieldset>
-
+			
 	        <div class="actions">
 				<span class="primary btn ()"><input type="submit" value="Save" /></span>
-				<span class="secondary btn ()"><a href="{% url management:serverimage-delete config.slug %}">{% trans "Delete"%}</a></span>
+				<span class="secondary btn ()"><a href="{% url management:serverimage-delete image.ami_id %}">{% trans "Delete"%}</a></span>
 	        </div>
 	    </form>
 	</div>

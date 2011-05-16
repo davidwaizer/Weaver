@@ -13,7 +13,7 @@ from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.template import RequestContext
 
-from management.models import ServerImage, KeyPairManager, Site, Server
+from management.models import EC2Helper, ServerImage, KeyPairManager, Site, Server
 from management.forms import ServerImageForm, SiteForm, ServerForm
 
 from boto.ec2.connection import EC2Connection
@@ -23,39 +23,45 @@ def index(request):
 
 
 def serverimage_index(request):
-    configs = ServerImage.objects.all()
-    return render_to_response('management/serverimage_index.html', {'configs': configs}, context_instance=RequestContext(request))
+    images = ServerImage.objects.get_all()
+    return render_to_response('management/serverimage_index.html', {'images': images}, context_instance=RequestContext(request))
     
 
-def serverimage_add(request):
-    form = ServerImageForm()
+def serverimage_manage(request, ami_id):
+    # Get some stuff
+    try:
+        ami = EC2Helper.get_image(ami_id)
+    except:
+        raise Exception('The AMI you entered is invalid.')
+    
+    try:
+        image = ServerImage.objects.get(ami_id=ami_id)
+        image.ami = ami
+        image.ami_id = ami.id
+    except ServerImage.DoesNotExist:
+        image = ServerImage(ami=ami)
+        image.ami_id = ami.id
+        image.name = ami.name if ami.name else ""
+        image.save()
+    
+    form = ServerImageForm(instance=image)
     
     if request.method == 'POST':
-        form = ServerImageForm(request.POST)
         
-        if form.is_valid():
-            config = form.save()
-            return HttpResponseRedirect(reverse('management:serverimage-edit', args=(config.slug,)))
-    
-    return render_to_response('management/serverimage_add.html', { 'form': form }, context_instance=RequestContext(request))
-
-
-def serverimage_edit(request, config_name):
-    config = get_object_or_404(ServerImage, slug=config_name)
-    form = ServerImageForm(instance=config)
-    
-    if request.method == 'POST':
-        form = ServerImageForm(request.POST, request.FILES, instance=config)
+        form = ServerImageForm(data=request.POST, instance=image)
+        #raise Exception(form.errors)
+        #raise Exception(dir(form))
         
-        if form.is_valid():
-            config = form.save()
-            return HttpResponseRedirect(reverse('management:serverimage-edit', args=(config.slug,)))
+        if form.is_valid():    
+            image = form.save()
+            return HttpResponseRedirect(reverse('management:serverimage-index'))
     
-    return render_to_response('management/serverimage_edit.html', { 'form': form, 'config': config }, context_instance=RequestContext(request))
+    return render_to_response('management/serverimage_manage.html', { 'form': form, 'image': image, }, context_instance=RequestContext(request))
 
 
-def serverimage_delete(request, config_name):
-    config = get_object_or_404(ServerImage, slug=config_name)
+
+def serverimage_delete(request, ami_id):
+    config = get_object_or_404(ServerImage, slug=ami_id)
     
     if request.method == 'POST':
         if request.POST.get('delete', '0') == '1':

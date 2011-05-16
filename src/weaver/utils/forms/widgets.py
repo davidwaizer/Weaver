@@ -1,4 +1,3 @@
-from convert import MediaFile
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.forms import widgets
@@ -10,8 +9,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 
-__all__ = ('TinyWidget', 'TinyAdminWidget', 'RadioSelect', 'ImageWidget',
-           'DeleteImageWidget', 'AdminImageWidget')
+__all__ = ('TinyWidget', 'TinyAdminWidget', 'RadioSelect')
 
 
 class TinyWidget(forms.Textarea):
@@ -57,40 +55,4 @@ class RadioFieldRenderer(widgets.RadioFieldRenderer):
 
 class RadioSelect(widgets.RadioSelect):
     renderer = RadioFieldRenderer
-
-
-class ImageWidget(forms.FileInput):
-    """
-    An ImageField Widget that shows its current value if it has one.
-    """
-    def render(self, name, value, attrs=None):
-        output = [super(ImageWidget, self).render(name, value, attrs)]
-        if value and hasattr(value, "url"):
-            im = MediaFile(value.name).thumbnail('150x150>')
-            tag = '<div class="profile-image">%s</div>' % im.tag
-            output.append(tag)
-        return mark_safe(u''.join(output))
-
-
-class AdminImageWidget(forms.FileInput):
-    """
-    An ImageField Widget for django.contrib.admin that shows its current
-    value if it has one.
-    """
-    def render(self, name, value, attrs=None):
-        output = [super(AdminImageWidget, self).render(name, value, attrs)]
-        if value and hasattr(value, "url"):
-            im = MediaFile(value.name).thumbnail('150x150>')
-            tag = ('<div style="float:left"><a style="display:block;margin:0 0 10px" '
-                   ' class="thumbnail" target="_blank" href="%s">%s</a>' %
-                   (value.url, im.tag))
-            output.insert(0, tag)
-            output.append('</div>')
-        return mark_safe(u''.join(output))
-
-
-class DeleteImageWidget(forms.CheckboxInput):
-    def render(self, name, value, attrs=None):
-        uber = super(DeleteImageWidget, self).render(name, value, attrs)
-        return u'<label for="%s">%s %s</label>' % (attrs['id'], uber, _('Delete image'))
 
