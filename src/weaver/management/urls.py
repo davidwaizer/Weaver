@@ -12,7 +12,6 @@ urlpatterns = patterns('',
 	
 	url(r'^server-images/$', views.serverimage_index, name='serverimage-index'),
 	url(r'^serverimages/(?P<ami_id>[-\w]+)/manage/$', views.serverimage_manage, name='serverimage-manage'),
-	url(r'^serverimages/(?P<ami_id>[-\w]+)/delete/$', views.serverimage_delete, name='serverimage-delete'),
     
 	url(r'^key-pairs/$', views.keypairs_index, name='keypairs-index'),
 	
@@ -22,8 +21,6 @@ urlpatterns = patterns('',
 	url(r'^sites/(?P<site_slug>[-\w]+)/delete/$', views.site_delete, name='site-delete'),
     
 	url(r'^servers/$', views.server_index, name='server-index'),	
-	url(r'^servers/add/$', views.server_add, name='server-add'),
-	url(r'^servers/(?P<server_slug>[-\w]+)/edit/$', views.server_edit, name='server-edit'),
-	url(r'^servers/(?P<server_slug>[-\w]+)/delete/$', views.server_delete, name='server-delete'),
+	url(r'^servers/(?P<instance_id>[-\w]+)/manage/$', views.server_manage, name='server-manage'),
     
 )

@@ -49,8 +49,6 @@ def serverimage_manage(request, ami_id):
     if request.method == 'POST':
         
         form = ServerImageForm(data=request.POST, instance=image)
-        #raise Exception(form.errors)
-        #raise Exception(dir(form))
         
         if form.is_valid():    
             image = form.save()
@@ -59,16 +57,6 @@ def serverimage_manage(request, ami_id):
     return render_to_response('management/serverimage_manage.html', { 'form': form, 'image': image, }, context_instance=RequestContext(request))
 
 
-
-def serverimage_delete(request, ami_id):
-    config = get_object_or_404(ServerImage, slug=ami_id)
-    
-    if request.method == 'POST':
-        if request.POST.get('delete', '0') == '1':
-            config.delete()
-            return HttpResponseRedirect(reverse('management:serverimage-index'))
-    
-    return render_to_response('management/serverimage_delete.html', { 'config': config }, context_instance=RequestContext(request))
 
 
 def keypairs_index(request):
@@ -121,44 +109,34 @@ def site_delete(request, site_slug):
 
 
 def server_index(request):
-    servers = Server.objects.all()
+    servers = Server.objects.get_all()
     return render_to_response('management/server_index.html', { 'servers': servers }, context_instance=RequestContext(request))
     
     
-def server_add(request):
-    form = ServerForm()
-
-    if request.method == 'POST':
-        form = ServerForm(request.POST)
-        
-        if form.is_valid():
-            server = form.save()
-            return HttpResponseRedirect(reverse('management:server-edit', args=(server.slug,)))
-
-    return render_to_response('management/server_add.html', { 'form': form }, context_instance=RequestContext(request))
-
-
-def server_edit(request, server_slug):
-    server = get_object_or_404(Server, slug=server_slug)
+def server_manage(request, instance_id):
+    # Get some stuff
+    try:
+        instance = EC2Helper.get_instance(instance_id)
+    except:
+        raise Exception('The instance id you entered is invalid.')
+    
+    try:
+        server = Server.objects.get(instance_id=instance_id)
+        server.instance = instance
+        server.instance_id = instance.id
+    except Server.DoesNotExist:
+        server = Server(instance=instance)
+        server.instance_id = instance.id
+        server.save()
+    
     form = ServerForm(instance=server)
-
-    if request.method == 'POST':
-        form = ServerForm(request.POST, request.FILES, instance=server)
-        
-        if form.is_valid():
-            server = form.save()
-            return HttpResponseRedirect(reverse('management:server-edit', args=(server.slug,)))
-
-    return render_to_response('management/server_edit.html', { 'form': form, 'server': server }, context_instance=RequestContext(request))
-
-
-def server_delete(request, server_slug):
-    server = get_object_or_404(Site, slug=server_slug)
     
     if request.method == 'POST':
-        if request.POST.get('delete', '0') == '1':
-            server.delete()
+        form = ServerForm(data=request.POST, instance=server)
+        
+        if form.is_valid():    
+            server = form.save()
             return HttpResponseRedirect(reverse('management:server-index'))
     
-    return render_to_response('management/server_delete.html', { 'server': server }, context_instance=RequestContext(request))
-
+    return render_to_response('management/server_manage.html', { 'form': form, 'server': server, }, context_instance=RequestContext(request))
+    

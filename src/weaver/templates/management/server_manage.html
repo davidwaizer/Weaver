@@ -1,0 +1,38 @@
+{% extends "management/base.html" %}
+{% load i18n utils %}
+
+{% block breadcrumb %}
+	<a href="{% url management:index %}">{% trans "Manage Servers" %}</a> &raquo;
+	<a href="{% url management:server-index %}">{% trans "Server Instances" %}</a> &raquo;
+	<strong>{{ server.instance_id }}</strong>
+{% endblock %}
+
+{% block primary %}
+	<div class="servers">
+		<h2>{% trans "Manage" %} {{ server.instance_id }}</h2>
+		<form action="." method="post" class="form">
+	        {% csrf_token %}
+			<fieldset>
+				<h3>{% trans "Weaver settings" %}</h3>
+		        <div class="form-row">
+		            {{ form|formfields:"name" }}
+		        </div>
+			</fieldset>
+			<fieldset>
+				<h3>{% trans "EC2 settings" %}</h3>
+				<div class="form-row">
+					<span class="field">
+				    	<label>AMI</label>
+				        <p class="value">{{server.instance.id}}</p>
+					</span>
+				</div>
+				
+			</fieldset>
+			
+	        <div class="actions">
+				<span class="primary btn ()"><input type="submit" value="Save" /></span>
+	        </div>
+	    </form>
+	</div>
+	
+{% endblock %}

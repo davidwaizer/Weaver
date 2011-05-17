@@ -24,25 +24,64 @@
 			<fieldset>
 				<h3>{% trans "EC2 settings" %}</h3>
 				<div class="form-row">
-		            {{ form|formfields:"base_image,public_key" }}
-		        </div>
-				<div class="form-row">
 				        <span class="field">
 				        	<label>AMI name</label>
-				        	<p class="value">{{image.base_image_name}}</p>
+				        	<p class="value">{{image.ami.name}}</p>
+				        </span>
+				</div>
+				<div class="form-row">
+				        <span class="field">
+				        	<label>AMI description</label>
+				        	<p class="value">{% if image.ami.description %}{{image.ami.description}}{% endif %}</p>
 				        </span>
 				</div>
 				<div class="form-row">
 		            <span class="field">
-			        	<label>AMI architecture</label>
-			        	<p class="value">{{image.base_image_architecture}}</p>
+			        	<label>Manifest location</label>
+			        	<p class="value">{{image.ami.location}}</p>
 			        </span>
 		        </div>
+				<div class="form-row">
+					<span class="field">
+			        	<label>Architecture</label>
+			        	<p class="value">{{image.ami.architecture}}</p>
+			        </span>
+					<span class="field">
+			        	<label>Type</label>
+			        	<p class="value">{{image.ami.root_device_type}}</p>
+			        </span>
+					<span class="field">
+			        	<label>Owner id</label>
+			        	<p class="value">{{image.ami.owner_id}}</p>
+			        </span>
+				</div>
+				<div class="form-row">
+					<span class="field">
+			        	<label>State</label>
+			        	<p class="value">{{image.ami.state}}</p>
+			        </span>
+		            <span class="field">
+			        	<label>Visibility</label>
+			        	<p class="value">{% if image.ami.is_public %}{% trans "Public" %}{% else %}{% trans "Private" %}{% endif %}</p>
+			        </span>
+		        </div>
+				<div class="form-row">
+		            <span class="field">
+			        	<label>ARI</label>
+			        	<p class="value">{{image.ami.ramdisk_id}}</p>
+			        </span>
+					<span class="field">
+			        	<label>AKI</label>
+			        	<p class="value">{{image.ami.kernel_id}}</p>
+			        </span>
+		        </div>
+				
+				
+
 			</fieldset>
 			
 	        <div class="actions">
 				<span class="primary btn ()"><input type="submit" value="Save" /></span>
-				<span class="secondary btn ()"><a href="{% url management:serverimage-delete image.ami_id %}">{% trans "Delete"%}</a></span>
 	        </div>
 	    </form>
 	</div>

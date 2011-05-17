@@ -8,20 +8,26 @@
 {% endblock %}
 
 {% block primary %}
-	<div class="servers">
+	<div class="serverinstances">
 		<h2>Servers</h2>
 		
-		{% if configs %}
+		{% if servers %}
 		<table>
 			<thead>
+				<th class="nowrap">Instance ID</th>
 				<th>Name</th>
-				<th>IP address</th>
+				<th>State</th>
+				<th>Public IP</th>
+				<th>Public DNS</th>
 			</thead>
 			<tbody>
 	 		{% for server in servers %}
 				<tr>
-					<td><a href="{% url management:server-edit server.slug %}">{{server.name}}</a></td>
-					<td>{{server.ip_address}}</td>
+					<td class="nowrap"><a href="{% url management:server-manage server.instance_id %}">{{server.instance.id}}</a></td>
+					<td>{{server.name}}</td>
+					<td>{{server.instance.state}}</td>
+					<td>{{server.instance.ip_address}}</td>
+					<td>{{server.instance.dns_name}}</td>
 				</tr>
 	 		{% endfor %}
 			</tbody>
@@ -34,8 +40,5 @@
 		</div>
 		{% endif %}
 
-		<div class="actions">
-			<span class="primary btn ()"><a href="{% url management:server-add %}">{% trans "New Server Instance" %}</a></span>
-		</div>
 	</div>
 {% endblock %}

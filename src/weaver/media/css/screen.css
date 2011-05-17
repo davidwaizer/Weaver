@@ -99,6 +99,7 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .notice h3 { color: #333; margin: 5px 0; font-weight: normal; font-size: 12px; text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.7); }
 .notice h4, .notice p { margin: 5px 0; }
 
+table td.nowrap, table th.nowrap { white-space: nowrap; }
 
 
 /* Server overview styles */
@@ -151,6 +152,7 @@ fieldset h3 { color: #999; font-size: 11px; line-height: 18px; margin: -18px 0 0
 .serverimages #id_base_image_architecture { width: 100px; }
 .serverimages .form-row input { width: 350px; }
 
+.serverinstances {  }
 
 /* Sites styles */
 .sites { width: 384px; }

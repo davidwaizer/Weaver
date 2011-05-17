@@ -25,6 +25,16 @@ class EC2Helper(object):
             return groups[0].owner_id
         return None
     
+    
+    @staticmethod
+    def get_instance(instance_id):
+        instances = EC2Helper.get_all_instances()
+        matches = [x for x in instances if x.id == instance_id]
+        if matches:
+            return matches[0]
+        else:
+            return None
+    
     @staticmethod
     def get_all_instances():
         conn = EC2Connection(settings.AWS_ACCESS_KEY, settings.AWS_SECRET_KEY)
@@ -182,7 +192,7 @@ class ServerImage(models.Model):
     
     def _get_ami(self):
         """ Gets the underlying ami """
-        if not self._cached_ami and ami_id:
+        if not self._cached_ami and self.ami_id:
             self._cached_ami = EC2Helper.get_image(self.ami_id)
         return self._cached_ami
         
@@ -235,21 +245,65 @@ class ServerCommand(models.Model):
         verbose_name_plural = _('commands')
     
 
-class Server(models.Model):
-    slug = models.CharField(_('slug'), max_length=110, editable=False, unique=True)
-    configuration = models.ForeignKey(ServerImage, name=_('server type'), related_name='server_nodes')
-    instance_id = models.CharField(_('instance_id'), max_length=100, unique=True)
-    public_dns = models.CharField(_('public dns'), max_length=255, unique=True, editable=False)
-    private_dns = models.CharField(_('private dns'), max_length=255, unique=True, editable=False)
+
+class ServerManager(models.Manager):
     
-    def save(self, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.public_dns, instance=self)
-        super(ServerNode, self).save(**kwargs)
+    def get_all(self):
+        """ Returns all server instances """
+        all_instances = EC2Helper.get_all_instances()
+        servers = self.all()
+        
+        all_servers = []
+        
+        for instance in all_instances:
+            matches = [x for x in servers if x.instance_id == instance.id]
+            server = matches[0] if matches else None
+            if not server:
+                server = Server(instance=instance)
+                server.instance_id = instance.id
+            else:
+                server.instance = instance
+            
+            server.name = server.name if server.name else ""
+            
+            
+            all_servers.append(server)
+        
+        return all_servers
+            
+            
+        
+
+
+class Server(models.Model):
+    _cached_instance = None
+    instance_id = models.CharField(_('instance id'), max_length=100, unique=True)
+    name = models.CharField(_('name'), max_length=100, blank=True, null=True)
+    
+    objects = ServerManager()
+    
+    def __init__(self, *args, **kwargs):
+        self._cached_instance = kwargs.pop('instance', None)
+        if self._cached_instance:
+            self.instance_id = self._cached_instance.id
+        
+        super(Server, self).__init__(*args, **kwargs)
+    
+    def _get_instance(self):
+        """ Gets the underlying instance """
+        if not self._cached_instance and self.instance_id:
+            self._cached_instance = EC2Helper.get_instance(self.instance_id)
+        return self._cached_instance
+    
+    def _set_instance(self, instance):
+        """ Sets the underlying instance """
+        self._cached_instance = instance
+    
+    instance = property(_get_instance, _set_instance)
     
     @permalink
     def get_absolute_url(self):
-        return ('server-edit', None, {'slug': self.slug})
+        return ('server-manage', None, {'slug': self.instance_id})
         
     def __unicode__(self):
         return self.public_dns
